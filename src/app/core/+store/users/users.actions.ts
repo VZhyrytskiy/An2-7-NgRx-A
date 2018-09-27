@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { User } from './../../../users/models/user.model';
+import { UserModel } from './../../../users/models/user.model';
 
 // Actions
 // [Users] - namespace
@@ -30,7 +30,7 @@ export class GetUsers implements Action {
 
 export class GetUsersSuccess implements Action {
   readonly type = UsersActionTypes.GET_USERS_SUCCESS;
-  constructor(public payload: User[]) {}
+  constructor(public payload: UserModel[]) {}
 }
 
 export class GetUsersError implements Action {
@@ -45,7 +45,7 @@ export class GetUser implements Action {
 
 export class GetUserSuccess implements Action {
   readonly type = UsersActionTypes.GET_USER_SUCCESS;
-  constructor(public payload: User) {}
+  constructor(public payload: UserModel) {}
 }
 
 export class GetUserError implements Action {
@@ -55,12 +55,12 @@ export class GetUserError implements Action {
 
 export class CreateUser implements Action {
   readonly type = UsersActionTypes.CREATE_USER;
-  constructor(public payload: User) {}
+  constructor(public payload: UserModel) {}
 }
 
 export class CreateUserSuccess implements Action {
   readonly type = UsersActionTypes.CREATE_USER_SUCCESS;
-  constructor(public payload: User) {}
+  constructor(public payload: UserModel) {}
 }
 
 export class CreateUserError implements Action {
@@ -70,12 +70,12 @@ export class CreateUserError implements Action {
 
 export class UpdateUser implements Action {
   readonly type = UsersActionTypes.UPDATE_USER;
-  constructor(public payload: User) {}
+  constructor(public payload: UserModel) {}
 }
 
 export class UpdateUserSuccess implements Action {
   readonly type = UsersActionTypes.UPDATE_USER_SUCCESS;
-  constructor(public payload: User) {}
+  constructor(public payload: UserModel) {}
 }
 
 export class UpdateUserError implements Action {
@@ -85,12 +85,12 @@ export class UpdateUserError implements Action {
 
 export class DeleteUser implements Action {
   readonly type = UsersActionTypes.DELETE_USER;
-  constructor(public payload: User) {}
+  constructor(public payload: UserModel) {}
 }
 
 export class DeleteUserSuccess implements Action {
   readonly type = UsersActionTypes.DELETE_USER_SUCCESS;
-  constructor(public payload: User) {}
+  constructor(public payload: UserModel) {}
 }
 
 export class DeleteUserError implements Action {
@@ -100,7 +100,7 @@ export class DeleteUserError implements Action {
 
 export class SetOriginalUser implements Action {
   readonly type = UsersActionTypes.SET_ORIGINAL_USER;
-  constructor(public payload: User) {}
+  constructor(public payload: UserModel) {}
 }
 
 export type UsersActions =

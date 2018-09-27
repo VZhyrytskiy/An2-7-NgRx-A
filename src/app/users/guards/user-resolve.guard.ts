@@ -8,20 +8,23 @@ import * as UsersActions from './../../core/+store/users/users.actions';
 
 // rxjs
 import { Observable, of } from 'rxjs';
-import { map, delay, catchError, tap, finalize, take } from 'rxjs/operators';
+import { delay, map, catchError, finalize, tap, take } from 'rxjs/operators';
 
-import { User } from './../models/user.model';
-import { SpinnerService } from '../../core';
+import { UserModel } from './../models/user.model';
+import { SpinnerService } from './../../core';
+import { UsersServicesModule } from '../users-services.module';
 
-@Injectable()
-export class UserResolveGuard implements Resolve<User> {
+@Injectable({
+  providedIn: UsersServicesModule
+})
+export class UserResolveGuard implements Resolve<UserModel> {
   constructor(
     private router: Router,
     private spinner: SpinnerService,
     private store: Store<AppState>
   ) {}
 
-  resolve(): Observable<User> | null {
+  resolve(): Observable<UserModel> | null {
     console.log('UserResolve Guard is called');
     this.spinner.show();
 
@@ -29,7 +32,7 @@ export class UserResolveGuard implements Resolve<User> {
       select(getSelectedUserByUrl),
       tap(user => this.store.dispatch(new UsersActions.SetOriginalUser(user))),
       delay(2000),
-      map(user => {
+      map((user: UserModel) => {
         if (user) {
           return user;
         } else {
@@ -40,6 +43,7 @@ export class UserResolveGuard implements Resolve<User> {
       take(1),
       catchError(() => {
         this.router.navigate(['/users']);
+        // catchError MUST return observable
         return of(null);
       }),
       finalize(() => this.spinner.hide())

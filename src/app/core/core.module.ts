@@ -3,37 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { CoreStoreModule } from './+store/core-store.module';
 
-import {
-  AboutComponent,
-  LoginComponent,
-  MessagesComponent,
-  PathNotFoundComponent,
-  AuthGuard,
-  AuthService,
-  CanDeactivateGuard,
-  DialogService,
-  MessagesService,
-  CustomPreloadingStrategyService,
-  SpinnerService
-} from '.';
-
 @NgModule({
-  imports: [CommonModule, CoreStoreModule],
-  declarations: [
-    AboutComponent,
-    PathNotFoundComponent,
-    MessagesComponent,
-    LoginComponent
-  ],
-  providers: [
-    AuthGuard,
-    AuthService,
-    CustomPreloadingStrategyService,
-    CanDeactivateGuard,
-    DialogService,
-    MessagesService,
-    SpinnerService
-  ]
+  imports: [CommonModule, CoreStoreModule]
 })
 export class CoreModule {
   constructor(

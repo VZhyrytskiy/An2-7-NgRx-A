@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 // @Ngrx
@@ -8,22 +8,18 @@ import { AppState, getUsersOriginalUser } from './../../../core/+store';
 import * as UsersActions from './../../../core/+store/users/users.actions';
 
 // rxjs
-import { Observable, of, Subscription } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-import {
-  AutoUnsubscribe,
-  DialogService,
-  CanComponentDeactivate
-} from './../../../core';
-import { User } from './../../models/user.model';
+import { DialogService, CanComponentDeactivate } from './../../../core';
+import { UserModel } from './../../models/user.model';
 
 @Component({
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.css']
 })
 export class UserFormComponent implements OnInit, CanComponentDeactivate {
-  user: User;
+  user: UserModel;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,7 +44,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  goBack() {
+  onGoBack() {
     this.location.back();
   }
 

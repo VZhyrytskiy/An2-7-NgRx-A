@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
+import { CoreModule } from '../core.module';
 
-@Injectable()
+@Injectable({
+  providedIn: CoreModule
+})
 export class MessagesService {
   isDisplayed = false;
 
@@ -13,9 +16,5 @@ export class MessagesService {
 
   getMessages(): Array<string> {
     return this.messages;
-  }
-
-  clearMessageList(): void {
-    this.messages.length = 0;
   }
 }
