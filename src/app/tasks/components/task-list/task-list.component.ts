@@ -9,22 +9,22 @@ import { AppState, getTasksData, getTasksError } from './../../../core/+store';
 // Rxjs
 import { Observable } from 'rxjs';
 
-import { Task } from './../../models/task.model';
+import { TaskModel } from './../../models/task.model';
 
 @Component({
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  tasks$: Observable<ReadonlyArray<Task>>;
+  tasks$: Observable<ReadonlyArray<TaskModel>>;
   tasksError$: Observable<Error | string>;
 
   constructor(private router: Router, private store: Store<AppState>) {}
 
   ngOnInit() {
     console.log('We have a store! ', this.store);
-    this.tasks$ = this.store.select(getTasksData);
-    this.tasksError$ = this.store.select(getTasksError);
+    this.tasks$ = this.store.pipe(select(getTasksData));
+    this.tasksError$ = this.store.pipe(select(getTasksError));
 
     this.store.dispatch(new TasksActions.GetTasks());
   }
@@ -34,17 +34,17 @@ export class TaskListComponent implements OnInit {
     this.router.navigate(link);
   }
 
-  onCompleteTask(task: Task): void {
+  onCompleteTask(task: TaskModel): void {
     const doneTask = { ...task, done: true };
     this.store.dispatch(new TasksActions.UpdateTask(doneTask));
   }
 
-  onEditTask(task: Task): void {
+  onEditTask(task: TaskModel): void {
     const link = ['/edit', task.id];
     this.router.navigate(link);
   }
 
-  onDeleteTask(task: Task) {
+  onDeleteTask(task: TaskModel) {
     this.store.dispatch(new TasksActions.DeleteTask(task));
   }
 }
