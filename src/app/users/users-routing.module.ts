@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { UsersComponent, UserListComponent, UserFormComponent, UserResolveGuard } from '.';
+import { UsersComponent } from './users.component';
+import { UserListComponent, UserFormComponent } from './components';
+import { UserResolveGuard } from './guards';
 
 import { CanDeactivateGuard } from './../core';
 
@@ -30,8 +32,11 @@ const routes: Routes = [
   }
 ];
 
-export let usersRouterComponents = [UsersComponent, UserListComponent, UserFormComponent];
-
+export let usersRouterComponents = [
+  UsersComponent,
+  UserListComponent,
+  UserFormComponent
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

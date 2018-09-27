@@ -9,7 +9,7 @@ import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
 // Rxjs
 import { Observable } from 'rxjs';
 
-import { Task } from './../../models/task.model';
+import { TaskModel } from './../../models/task.model';
 import { TaskPromiseService } from './../../services';
 
 @Component({
@@ -17,7 +17,7 @@ import { TaskPromiseService } from './../../services';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  tasks: Array<Task>;
+  tasks: Promise<Array<TaskModel>>;
   tasksState$: Observable<TasksState>;
 
   constructor(
@@ -36,19 +36,19 @@ export class TaskListComponent implements OnInit {
     this.router.navigate(link);
   }
 
-  onCompleteTask(task: Task): void {
+  onCompleteTask(task: TaskModel): void {
     this.store.dispatch(new TasksActions.DoneTask(task));
   }
 
-  onEditTask(task: Task): void {
+  onEditTask(task: TaskModel): void {
     const link = ['/edit', task.id];
     this.router.navigate(link);
   }
 
-  onDeleteTask(task: Task) {
+  onDeleteTask(task: TaskModel) {
     this.taskPromiseService
       .deleteTask(task)
-      .then(() => (this.tasks = this.tasks.filter(t => t.id !== task.id)))
+      .then(() => (this.tasks = this.taskPromiseService.getTasks()))
       .catch(err => console.log(err));
   }
 }
