@@ -1,5 +1,3 @@
-import { ActionReducerMap } from '@ngrx/store';
-
 import { TasksState } from './tasks';
 import { UsersState } from './users';
 

@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { UsersState } from './users.state';
-import { User } from './../../../users/models/user.model';
+import { UserModel } from './../../../users/models/user.model';
 import { getRouterState } from './../router/router.selectors';
 
 const getEntities = (state: UsersState) => state.entities;
@@ -28,7 +28,7 @@ export const getUsers = createSelector(getUsersEntitites, entities => {
 export const getEditedUser = createSelector(
     getUsersEntitites,
     getRouterState,
-    (users, router): User => {
+    (users, router): UserModel => {
         const userID = router.state.params.editedUserID;
         if (userID) {
             return users[userID];
@@ -40,11 +40,11 @@ export const getEditedUser = createSelector(
 export const getSelectedUserByUrl = createSelector(
     getUsersEntitites,
     getRouterState,
-    (users, router): User => {
+    (users, router): UserModel => {
         const userID = router.state.params.userID;
         if (userID) {
             return users[userID];
         } else {
-            return new User(null, '', '');
+            return new UserModel(null, '', '');
         }
 });

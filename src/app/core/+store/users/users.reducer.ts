@@ -1,7 +1,7 @@
 import { UsersActionTypes, UsersActions } from './users.actions';
 import { initialUsersState, UsersState } from './users.state';
 
-import { User } from './../../../users/models/user.model';
+import { UserModel } from './../../../users/models/user.model';
 
 export function usersReducer(
   state = initialUsersState,
@@ -19,11 +19,11 @@ export function usersReducer(
     }
 
     case UsersActionTypes.GET_USERS_SUCCESS: {
-      const users = <User[]>action.payload;
+      const users = <UserModel[]>action.payload;
       console.log(users);
 
       const entities = users.reduce(
-        (result: { [id: number]: User }, user: User) => {
+        (result: { [id: number]: UserModel }, user: UserModel) => {
           return {
             ...result,
             [user.id]: user
@@ -43,7 +43,7 @@ export function usersReducer(
     }
 
     case UsersActionTypes.GET_USER_SUCCESS: {
-      const originalUser = { ...(<User>action.payload) };
+      const originalUser = { ...(<UserModel>action.payload) };
 
       return {
         ...state,
@@ -75,12 +75,12 @@ export function usersReducer(
 
     case UsersActionTypes.CREATE_USER_SUCCESS:
     case UsersActionTypes.UPDATE_USER_SUCCESS: {
-      const user = <User>action.payload;
+      const user = <UserModel>action.payload;
       const entities = {
         ...state.entities,
         [user.id]: user
       };
-      const originalUser = { ...(<User>action.payload) };
+      const originalUser = { ...(<UserModel>action.payload) };
 
       return {
         ...state,
@@ -90,7 +90,7 @@ export function usersReducer(
     }
 
     case UsersActionTypes.DELETE_USER_SUCCESS: {
-      const user = <User>action.payload;
+      const user = <UserModel>action.payload;
       const { [user.id]: removed, ...entities } = state.entities;
 
       return {
@@ -110,7 +110,7 @@ export function usersReducer(
     }
 
     case UsersActionTypes.SET_ORIGINAL_USER: {
-      const originalUser = { ...(<User>action.payload) };
+      const originalUser = { ...(<UserModel>action.payload) };
 
       return {
         ...state,

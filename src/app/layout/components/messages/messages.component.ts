@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
-import { AppState } from './../../+store';
-import * as RouterActions from './../../+store/router/router.actions';
+import { AppState } from './../../../core/+store';
+import * as RouterActions from './../../../core/+store/router/router.actions';
 
-import { MessagesService } from './../../services/messages.service';
+import { MessagesService } from './../../../core';
 
 @Component({
   selector: 'app-messages',
@@ -13,6 +13,8 @@ import { MessagesService } from './../../services/messages.service';
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent implements OnInit {
+  message = '';
+
   constructor(
     public messagesService: MessagesService,
     private store: Store<AppState>
@@ -23,9 +25,16 @@ export class MessagesComponent implements OnInit {
   onClose() {
     this.store.dispatch(
       new RouterActions.Go({
-        path: [{ outlets: { popup: null } }]
+        path: [{ outlets: { messages: null } }]
       })
     );
     this.messagesService.isDisplayed = false;
+  }
+
+  onSend() {
+    if (this.message) {
+      this.messagesService.addMessage(this.message);
+      this.message = '';
+    }
   }
 }

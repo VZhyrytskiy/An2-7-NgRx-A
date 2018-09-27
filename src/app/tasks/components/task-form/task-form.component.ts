@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
 // @Ngrx
 import { Store, select } from '@ngrx/store';
@@ -8,9 +7,9 @@ import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
 import * as RouterActions from './../../../core/+store/router/router.actions';
 
 // rxjs
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
-import { Task } from './../../models/task.model';
+import { TaskModel } from './../../models/task.model';
 import { AutoUnsubscribe } from '../../../core';
 
 @Component({
@@ -19,14 +18,11 @@ import { AutoUnsubscribe } from '../../../core';
 })
 @AutoUnsubscribe()
 export class TaskFormComponent implements OnInit {
-  task: Task;
+  task: TaskModel;
 
   private sub: Subscription;
 
-  constructor(
-    private route: ActivatedRoute,
-    private store: Store<AppState>
-  ) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.sub = this.store
@@ -44,9 +40,11 @@ export class TaskFormComponent implements OnInit {
     }
   }
 
-  goBack(): void {
-    this.store.dispatch(new RouterActions.Go({
-      path: ['/home']
-    }));
+  onGoBack(): void {
+    this.store.dispatch(
+      new RouterActions.Go({
+        path: ['/home']
+      })
+    );
   }
 }

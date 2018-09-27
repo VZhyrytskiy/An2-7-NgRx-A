@@ -5,10 +5,9 @@ import {
   AboutComponent,
   MessagesComponent,
   LoginComponent,
-  PathNotFoundComponent,
-  AuthGuard,
-  CustomPreloadingStrategyService
-} from './core';
+  PathNotFoundComponent
+} from './layout';
+import { AuthGuard, CustomPreloadingStrategyService } from './core';
 
 const routes: Routes = [
   {
@@ -24,12 +23,12 @@ const routes: Routes = [
   {
     path: 'admin',
     canLoad: [AuthGuard],
-    loadChildren: 'app/admin/admin.module#AdminModule',
+    loadChildren: './admin/admin.module#AdminModule',
     data: { title: 'Admin' }
   },
   {
     path: 'users',
-    loadChildren: 'app/users/users.module#UsersModule',
+    loadChildren: './users/users.module#UsersModule',
     data: {
       preload: true,
       title: 'Users'
@@ -38,8 +37,9 @@ const routes: Routes = [
   {
     path: 'messages',
     component: MessagesComponent,
-    outlet: 'popup'
+    outlet: 'messages'
   },
+
   {
     path: '',
     redirectTo: '/home',

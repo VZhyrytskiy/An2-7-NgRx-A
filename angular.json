@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-http": {
+    "angular-ngrx": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -49,18 +49,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-http:build"
+            "browserTarget": "angular-ngrx:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-http:build:production"
+              "browserTarget": "angular-ngrx:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-http:build"
+            "browserTarget": "angular-ngrx:build"
           }
         },
         "test": {
@@ -95,7 +95,7 @@
         }
       }
     },
-    "angular-http-e2e": {
+    "angular-ngrx-e2e": {
       "root": "",
       "sourceRoot": "",
       "projectType": "application",
@@ -104,7 +104,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "angular-http:serve"
+            "devServerTarget": "angular-ngrx:serve"
           }
         },
         "lint": {
@@ -121,17 +121,17 @@
       }
     }
   },
-  "defaultProject": "angular-http",
+  "defaultProject": "angular-ngrx",
   "schematics": {
-    "@ngrx/schematics:component": {
+    "@schematics/angular:component": {
       "prefix": "app",
       "styleext": "css"
     },
-    "@ngrx/schematics:directive": {
+    "@schematics/angular:directive": {
       "prefix": "app"
+    },
+    "cli": {
+      "defaultCollection": "@ngrx/schematics"
     }
-  },
-  "cli": {
-    "defaultCollection": "@ngrx/schematics"
   }
 }

@@ -1,24 +1,31 @@
 import { Injectable } from '@angular/core';
 import {
-  CanActivate, CanActivateChild, CanLoad, Route,
-  ActivatedRouteSnapshot, RouterStateSnapshot, NavigationExtras
+  CanActivate,
+  CanActivateChild,
+  CanLoad,
+  Route,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  NavigationExtras
 } from '@angular/router';
 
 // @Ngrx
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { AppState } from './../+store';
 import * as RouterActions from './../+store/router/router.actions';
 
 import { Observable } from 'rxjs';
+import { CoreModule } from '../core.module';
+import { AuthService } from '../services/auth.service';
 
-import { AuthService } from './../services/auth.service';
-
-@Injectable()
+@Injectable({
+  providedIn: CoreModule
+})
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(
     private authService: AuthService,
     private store: Store<AppState>
-  ) { }
+  ) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -38,8 +45,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     return this.checkLogin(url);
   }
 
-  canLoad(route: Route)
-  : Observable<boolean> | Promise<boolean> | boolean {
+  canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
     console.log('CanLoad Guard is activated');
     const url = `/${route.path}`;
 
@@ -65,10 +71,12 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     };
 
     // Navigate to the login page with extras
-    this.store.dispatch(new RouterActions.Go({
-      path: ['/login'],
-      extras: navigationExtras
-    }));
+    this.store.dispatch(
+      new RouterActions.Go({
+        path: ['/login'],
+        extras: navigationExtras
+      })
+    );
 
     return false;
   }

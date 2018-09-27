@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
 // @ngrx
 import { Action } from '@ngrx/store';
@@ -12,13 +11,12 @@ import { Observable } from 'rxjs';
 import { concatMap, map, pluck, switchMap } from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../../tasks/services';
-import { Task } from '../../../tasks/models/task.model';
+import { TaskModel } from '../../../tasks/models/task.model';
 
 @Injectable()
 export class TasksEffects {
   constructor(
     private actions$: Actions,
-    private router: Router,
     private taskPromiseService: TaskPromiseService
   ) {
     console.log('[TASKS EFFECTS]');
@@ -43,7 +41,7 @@ export class TasksEffects {
   updateTask$: Observable<Action> = this.actions$.pipe(
     ofType<TasksActions.UpdateTask>(TasksActions.TasksActionTypes.UPDATE_TASK),
     pluck('payload'),
-    concatMap((payload: Task) =>
+    concatMap((payload: TaskModel) =>
       this.taskPromiseService
         .updateTask(payload)
         .then(task => new TasksActions.UpdateTaskSuccess(task))
@@ -55,7 +53,7 @@ export class TasksEffects {
   createTask$: Observable<Action> = this.actions$.pipe(
     ofType<TasksActions.CreateTask>(TasksActions.TasksActionTypes.CREATE_TASK),
     pluck('payload'),
-    concatMap((payload: Task) =>
+    concatMap((payload: TaskModel) =>
       this.taskPromiseService
         .createTask(payload)
         .then(task => new TasksActions.CreateTaskSuccess(task))
@@ -67,7 +65,7 @@ export class TasksEffects {
   deleteTask$: Observable<Action> = this.actions$.pipe(
     ofType<TasksActions.DeleteTask>(TasksActions.TasksActionTypes.DELETE_TASK),
     pluck('payload'),
-    concatMap((payload: Task) =>
+    concatMap((payload: TaskModel) =>
       this.taskPromiseService
         .deleteTask(payload)
         .then(

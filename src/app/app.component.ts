@@ -41,7 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
   onDisplayMessages(): void {
     this.store.dispatch(
       new RouterActions.Go({
-        path: [{ outlets: { popup: ['messages'] } }]
+        path: [{ outlets: { messages: ['messages'] } }]
       })
     );
     this.messagesService.isDisplayed = true;

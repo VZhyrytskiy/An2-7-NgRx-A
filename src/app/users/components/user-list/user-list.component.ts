@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 // rxjs
-import { Observable, Subscription, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 
 // ngrx
 import { Store, select } from '@ngrx/store';
@@ -16,7 +14,7 @@ import {
   getEditedUser
 } from './../../../core/+store';
 
-import { User } from './../../models/user.model';
+import { UserModel } from './../../models/user.model';
 import { AutoUnsubscribe } from './../../../core/decorators';
 
 @Component({
@@ -25,14 +23,13 @@ import { AutoUnsubscribe } from './../../../core/decorators';
 })
 @AutoUnsubscribe('subscription')
 export class UserListComponent implements OnInit {
-  users$: Observable<Array<User>>;
+  users$: Observable<Array<UserModel>>;
   usersError$: Observable<Error | string>;
 
   private subscription: Subscription;
-  private editedUser: User;
+  private editedUser: UserModel;
 
   constructor(
-    private route: ActivatedRoute,
     private store: Store<AppState>
   ) {}
 
@@ -42,7 +39,7 @@ export class UserListComponent implements OnInit {
     this.store.dispatch(new UsersActions.GetUsers());
 
     // listen editedUserID from UserFormComponent
-    this.subscription = this.store.select(getEditedUser).subscribe(
+    this.subscription = this.store.pipe(select(getEditedUser)).subscribe(
       user => {
         this.editedUser = user;
         console.log(
@@ -53,18 +50,18 @@ export class UserListComponent implements OnInit {
     );
   }
 
-  isEdited(user: User) {
+  isEdited(user: UserModel) {
     if (this.editedUser) {
       return user.id === this.editedUser.id;
     }
     return false;
   }
 
-  onDeleteUser(user: User) {
+  onDeleteUser(user: UserModel) {
     this.store.dispatch(new UsersActions.DeleteUser(user));
   }
 
-  onEditUser(user: User) {
+  onEditUser(user: UserModel) {
     const link = ['/users/edit', user.id];
 
     this.store.dispatch(
