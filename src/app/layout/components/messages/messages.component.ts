@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { MessagesService } from './../../services/messages.service';
+import { MessagesService } from '../../../core';
 
 @Component({
   selector: 'app-messages',
@@ -9,6 +8,8 @@ import { MessagesService } from './../../services/messages.service';
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent implements OnInit {
+  message = '';
+
   constructor(
     public messagesService: MessagesService,
     private router: Router
@@ -17,7 +18,14 @@ export class MessagesComponent implements OnInit {
   ngOnInit() {}
 
   onClose() {
-    this.router.navigate([{ outlets: { popup: null } }]);
+    this.router.navigate([{ outlets: { messages: null } }]);
     this.messagesService.isDisplayed = false;
+  }
+
+  onSend() {
+    if (this.message) {
+      this.messagesService.addMessage(this.message);
+      this.message = '';
+    }
   }
 }

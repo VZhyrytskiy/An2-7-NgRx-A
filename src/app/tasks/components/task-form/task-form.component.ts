@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Location } from '@angular/common';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 // @Ngrx
 import { Store, select } from '@ngrx/store';
@@ -10,7 +9,7 @@ import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
 // rxjs
 import { Observable, Subscription } from 'rxjs';
 
-import { Task } from './../../models/task.model';
+import { TaskModel } from './../../models/task.model';
 import { TaskPromiseService } from './../../services';
 import { AutoUnsubscribe } from '../../../core';
 
@@ -20,7 +19,7 @@ import { AutoUnsubscribe } from '../../../core';
 })
 @AutoUnsubscribe()
 export class TaskFormComponent implements OnInit {
-  task: Task;
+  task: TaskModel;
   tasksState$: Observable<TasksState>;
 
   private sub: Subscription;
@@ -28,12 +27,12 @@ export class TaskFormComponent implements OnInit {
   constructor(
     private taskPromiseService: TaskPromiseService,
     private route: ActivatedRoute,
-    private location: Location,
+    private router: Router,
     private store: Store<AppState>
   ) { }
 
   ngOnInit(): void {
-    this.task = new Task(null, '', null, null);
+    this.task = new TaskModel();
 
     this.tasksState$ = this.store.pipe(select('tasks'));
     this.sub = this.tasksState$.subscribe(tasksState =>
@@ -53,11 +52,11 @@ export class TaskFormComponent implements OnInit {
 
     const method = task.id ? 'updateTask' : 'createTask';
     this.taskPromiseService[method](task)
-      .then(() => this.goBack())
+      .then(() => this.onGoBack())
       .catch(err => console.log(err));
   }
 
-  goBack(): void {
-    this.location.back();
+  onGoBack(): void {
+    this.router.navigate(['/home']);
   }
 }
