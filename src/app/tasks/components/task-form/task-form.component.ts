@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Location } from '@angular/common';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 // @Ngrx
 import { Store, select } from '@ngrx/store';
@@ -10,7 +9,7 @@ import * as TasksActions from './../../../core/+store/tasks/tasks.actions';
 // rxjs
 import { Observable, Subscription } from 'rxjs';
 
-import { Task } from './../../models/task.model';
+import { TaskModel } from './../../models/task.model';
 import { AutoUnsubscribe } from '../../../core';
 
 @Component({
@@ -19,14 +18,14 @@ import { AutoUnsubscribe } from '../../../core';
 })
 @AutoUnsubscribe()
 export class TaskFormComponent implements OnInit {
-  task: Task;
+  task: TaskModel;
   tasksState$: Observable<TasksState>;
 
   private sub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
-    private location: Location,
+    private router: Router,
     private store: Store<AppState>
   ) { }
 
@@ -36,7 +35,7 @@ export class TaskFormComponent implements OnInit {
       if (tasksState.selectedTask) {
         this.task = tasksState.selectedTask;
       } else {
-        this.task = new Task(null, '', null, null);
+        this.task = new TaskModel();
       }
     });
 
@@ -58,7 +57,7 @@ export class TaskFormComponent implements OnInit {
     }
   }
 
-  goBack(): void {
-    this.location.back();
+  onGoBack(): void {
+    this.router.navigate(['/home']);
   }
 }
