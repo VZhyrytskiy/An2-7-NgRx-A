@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { concatMap, pluck, switchMap } from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../../tasks/services';
-import { Task } from '../../../tasks/models/task.model';
+import { TaskModel } from '../../../tasks/models/task.model';
 
 @Injectable()
 export class TasksEffects {
@@ -54,7 +54,7 @@ export class TasksEffects {
   updateTask$: Observable<Action> = this.actions$.pipe(
     ofType<TasksActions.UpdateTask>(TasksActions.TasksActionTypes.UPDATE_TASK),
     pluck('payload'),
-    concatMap((payload: Task) =>
+    concatMap((payload: TaskModel) =>
       this.taskPromiseService
         .updateTask(payload)
         .then(task => {
@@ -69,7 +69,7 @@ export class TasksEffects {
   createTask$: Observable<Action> = this.actions$.pipe(
     ofType<TasksActions.CreateTask>(TasksActions.TasksActionTypes.CREATE_TASK),
     pluck('payload'),
-    concatMap((payload: Task) =>
+    concatMap((payload: TaskModel) =>
       this.taskPromiseService
         .createTask(payload)
         .then(task => {
