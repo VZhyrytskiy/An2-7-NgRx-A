@@ -4,15 +4,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { Router } from '@angular/router';
 
-// @Ngrx
-import { StoreModule } from '@ngrx/store';
-
 // add this line if you don't have access to
 // index.html and you want to set base tag
 // import { APP_BASE_HREF } from '@angular/common';
 
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { LayoutModule } from './layout/layout.module';
 import { TasksModule } from './tasks/tasks.module';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -27,6 +25,7 @@ import { MyInterceptor } from './core/interceptors/my.interceptor';
     HttpClientModule,
     CoreModule,
     SharedModule,
+    LayoutModule,
     TasksModule,
     AppRoutingModule
   ],

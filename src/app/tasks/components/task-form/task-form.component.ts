@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Location } from '@angular/common';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 // rxjs
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
-import { Task } from './../../models/task.model';
+import { TaskModel } from './../../models/task.model';
 import { TaskPromiseService } from './../../services';
 
 @Component({
@@ -13,16 +12,16 @@ import { TaskPromiseService } from './../../services';
   styleUrls: ['./task-form.component.css']
 })
 export class TaskFormComponent implements OnInit {
-  task: Task;
+  task: TaskModel;
 
   constructor(
     private taskPromiseService: TaskPromiseService,
-    private location: Location,
+    private router: Router,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.task = new Task(null, '', null, null);
+    this.task = new TaskModel();
 
     this.route.paramMap
       .pipe(
@@ -32,7 +31,11 @@ export class TaskFormComponent implements OnInit {
             : Promise.resolve(null);
         })
       )
-      .subscribe(task => (this.task = { ...task }), err => console.log(err));
+      .subscribe(
+        // when Promise.resolve(null) => task = null => {...null} => {}
+        task => (this.task = { ...task }),
+        err => console.log(err)
+      );
   }
 
   onSaveTask() {
@@ -40,11 +43,11 @@ export class TaskFormComponent implements OnInit {
 
     const method = task.id ? 'updateTask' : 'createTask';
     this.taskPromiseService[method](task)
-      .then(() => this.goBack())
+      .then(() => this.onGoBack())
       .catch(err => console.log(err));
   }
 
-  goBack(): void {
-    this.location.back();
+  onGoBack(): void {
+    this.router.navigate(['/home']);
   }
 }

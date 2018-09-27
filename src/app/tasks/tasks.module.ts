@@ -10,9 +10,9 @@ import { TasksRoutingModule } from './tasks-routing.module';
 import {
   TaskComponent,
   TaskFormComponent,
-  TaskListComponent,
-  TaskPromiseService
-} from '.';
+  TaskListComponent
+} from './components';
+import { TasksServicesModule } from './tasks-services.module';
 
 @NgModule({
   declarations: [TaskListComponent, TaskFormComponent, TaskComponent],
@@ -20,8 +20,9 @@ import {
     CommonModule,
     FormsModule,
     TasksRoutingModule,
+    TasksServicesModule,
     StoreModule.forFeature('tasks', tasksReducer)
   ],
-  providers: [TaskPromiseService]
+  providers: []
 })
 export class TasksModule {}
