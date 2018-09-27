@@ -5,24 +5,23 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-import { User } from './../../models/user.model';
-import { UserArrayService, UserObservableService } from './../../services';
+import { UserModel } from './../../models/user.model';
+import { UserObservableService } from './../../services';
 
 @Component({
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-  users$: Observable<Array<User>>;
+  users$: Observable<Array<UserModel>>;
 
-  private editedUser: User;
+  private editedUser: UserModel;
 
   constructor(
-    private userArrayService: UserArrayService,
     private userObservableService: UserObservableService,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.users$ = this.userObservableService.getUsers();
@@ -37,27 +36,32 @@ export class UserListComponent implements OnInit {
         })
       )
       .subscribe(
-        (user: User) => {
-          this.editedUser = {...user};
-          console.log(`Last time you edited user ${JSON.stringify(this.editedUser)}`);
+        (user: UserModel) => {
+          this.editedUser = { ...user };
+          console.log(
+            `Last time you edited user ${JSON.stringify(this.editedUser)}`
+          );
         },
         err => console.log(err)
       );
   }
 
-  onEditUser(user: User) {
+  onEditUser(user: UserModel) {
     const link = ['/users/edit', user.id];
     this.router.navigate(link);
+    // or
+    // const link = ['edit', user.id];
+    // this.router.navigate(link, {relativeTo: this.route});
   }
 
-  isEdited(user: User) {
+  isEdited(user: UserModel) {
     if (this.editedUser) {
       return user.id === this.editedUser.id;
     }
     return false;
   }
 
-  onDeleteUser(user: User) {
+  onDeleteUser(user: UserModel) {
     this.users$ = this.userObservableService.deleteUser(user);
   }
 }
