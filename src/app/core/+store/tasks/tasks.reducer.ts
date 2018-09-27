@@ -1,7 +1,7 @@
 import { TasksActionTypes, TasksActions } from './tasks.actions';
 import { TasksState, initialTasksState } from './tasks.state';
 
-import { Task } from './../../../tasks/models/task.model';
+import { TaskModel } from './../../../tasks/models/task.model';
 
 export function tasksReducer(
   state = initialTasksState,
@@ -20,7 +20,7 @@ export function tasksReducer(
 
     case TasksActionTypes.GET_TASKS_SUCCESS: {
       console.log('GET_TASKS_SUCCESS action being handled!');
-      const data = [...(<Array<Task>>action.payload)];
+      const data = [...(<Array<TaskModel>>action.payload)];
       return {
         ...state,
         data,
@@ -51,7 +51,7 @@ export function tasksReducer(
 
     case TasksActionTypes.GET_TASK_SUCCESS: {
       console.log('GET_TASK_SUCCESS action being handled!');
-      const selectedTask = { ...(<Task>action.payload) };
+      const selectedTask = { ...(<TaskModel>action.payload) };
       return {
         ...state,
         loading: false,
@@ -78,7 +78,7 @@ export function tasksReducer(
 
     case TasksActionTypes.CREATE_TASK_SUCCESS: {
       console.log('CREATE_TASK_SUCCESS action being handled!');
-      const task = { ...(<Task>action.payload) };
+      const task = { ...(<TaskModel>action.payload) };
       const data = [...state.data, task];
 
       return {
@@ -103,7 +103,7 @@ export function tasksReducer(
 
     case TasksActionTypes.UPDATE_TASK_SUCCESS: {
       console.log('UPDATE_TASK_SUCCESS action being handled!');
-      const task = { ...(<Task>action.payload) };
+      const task = { ...(<TaskModel>action.payload) };
       const data = [...state.data];
       const index = data.findIndex(t => t.id === task.id);
 
@@ -131,7 +131,7 @@ export function tasksReducer(
 
     case TasksActionTypes.DELETE_TASK_SUCCESS: {
       console.log('DELETE_TASK_SUCCESS action being handled!');
-      const task = { ...(<Task>action.payload) };
+      const task = { ...(<TaskModel>action.payload) };
       const data = state.data.filter(t => t.id !== task.id);
 
       return {
