@@ -6,15 +6,14 @@ import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { TasksEffects, tasksReducer } from './../core/+store';
-import {  } from '../core/+store/tasks/tasks.effects';
 
 import { TasksRoutingModule } from './tasks-routing.module';
 import {
   TaskComponent,
   TaskFormComponent,
-  TaskListComponent,
-  TaskPromiseService
-} from '.';
+  TaskListComponent
+} from './components';
+import { TasksServicesModule } from './tasks-services.module';
 
 @NgModule({
   declarations: [TaskListComponent, TaskFormComponent, TaskComponent],
@@ -22,9 +21,10 @@ import {
     CommonModule,
     FormsModule,
     TasksRoutingModule,
+    TasksServicesModule,
     StoreModule.forFeature('tasks', tasksReducer),
     EffectsModule.forFeature([TasksEffects])
   ],
-  providers: [TaskPromiseService]
+  providers: []
 })
 export class TasksModule {}
