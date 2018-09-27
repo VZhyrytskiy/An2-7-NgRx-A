@@ -13,6 +13,7 @@ import { StoreModule } from '@ngrx/store';
 
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { LayoutModule } from './layout/layout.module';
 import { TasksModule } from './tasks/tasks.module';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -27,6 +28,7 @@ import { MyInterceptor } from './core/interceptors/my.interceptor';
     HttpClientModule,
     CoreModule,
     SharedModule,
+    LayoutModule,
     TasksModule,
     AppRoutingModule
   ],

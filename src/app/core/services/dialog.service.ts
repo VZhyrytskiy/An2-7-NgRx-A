@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
+import { CoreModule } from '../core.module';
 
-@Injectable()
+@Injectable({
+  providedIn: CoreModule
+})
 export class DialogService {
 
   confirm(message?: string): Promise<boolean> {

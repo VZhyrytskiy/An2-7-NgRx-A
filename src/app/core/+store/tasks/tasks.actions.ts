@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { Task } from './../../../tasks/models/task.model';
+import { TaskModel } from './../../../tasks/models/task.model';
 
 // [Tasks]- namespace
 export enum TasksActionTypes {
@@ -22,17 +22,17 @@ export class GetTask implements Action {
 
 export class CreateTask implements Action {
   readonly type = TasksActionTypes.CREATE_TASK;
-  constructor(public payload: Task) { }
+  constructor(public payload: TaskModel) { }
 }
 
 export class UpdateTask implements Action {
   readonly type = TasksActionTypes.UPDATE_TASK;
-  constructor(public payload: Task) { }
+  constructor(public payload: TaskModel) { }
 }
 
 export class DeleteTask implements Action {
   readonly type = TasksActionTypes.DELETE_TASK;
-  constructor(public payload: Task) { }
+  constructor(public payload: TaskModel) { }
 }
 
 export type TasksActions
