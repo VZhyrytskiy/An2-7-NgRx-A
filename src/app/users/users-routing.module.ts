@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { UsersComponent } from './users.component';
 import { UserListComponent, UserFormComponent } from './components';
-import { UserResolveGuard } from './guards';
+import { UsersStatePreloadingGuard } from './guards';
 
 import { CanDeactivateGuard } from './../core';
 
@@ -19,14 +19,12 @@ const routes: Routes = [
       {
         path: 'edit/:userID',
         component: UserFormComponent,
-        canDeactivate: [CanDeactivateGuard],
-        resolve: {
-          user: UserResolveGuard
-        }
+        canDeactivate: [CanDeactivateGuard]
       },
       {
         path: '',
-        component: UserListComponent
+        component: UserListComponent,
+        canActivate: [UsersStatePreloadingGuard]
       }
     ]
   }

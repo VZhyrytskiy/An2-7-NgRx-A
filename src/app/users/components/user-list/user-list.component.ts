@@ -36,7 +36,6 @@ export class UserListComponent implements OnInit {
   ngOnInit() {
     this.users$ = this.store.pipe(select(getUsers));
     this.usersError$ = this.store.pipe(select(getUsersError));
-    this.store.dispatch(new UsersActions.GetUsers());
 
     // listen editedUserID from UserFormComponent
     this.subscription = this.store.pipe(select(getEditedUser)).subscribe(

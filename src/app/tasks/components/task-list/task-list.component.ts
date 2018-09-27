@@ -25,8 +25,6 @@ export class TaskListComponent implements OnInit {
     console.log('We have a store! ', this.store);
     this.tasks$ = this.store.pipe(select(getTasksData));
     this.tasksError$ = this.store.pipe(select(getTasksError));
-
-    this.store.dispatch(new TasksActions.GetTasks());
   }
 
   onCreateTask() {
