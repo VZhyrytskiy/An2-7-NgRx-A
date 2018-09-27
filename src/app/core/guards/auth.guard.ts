@@ -11,15 +11,14 @@ import {
 } from '@angular/router';
 
 import { Observable } from 'rxjs';
+import { CoreModule } from '../core.module';
+import { AuthService } from '../services/auth.service';
 
-import { AuthService } from './../services/auth.service';
-
-@Injectable()
+@Injectable({
+  providedIn: CoreModule
+})
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -39,8 +38,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     return this.checkLogin(url);
   }
 
-  canLoad(route: Route)
-  : Observable<boolean> | Promise<boolean> | boolean {
+  canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
     console.log('CanLoad Guard is activated');
     const url = `/${route.path}`;
 
