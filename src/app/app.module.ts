@@ -4,9 +4,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { Router } from '@angular/router';
 
-// @Ngrx
-import { StoreModule } from '@ngrx/store';
-
 // add this line if you don't have access to
 // index.html and you want to set base tag
 // import { APP_BASE_HREF } from '@angular/common';
