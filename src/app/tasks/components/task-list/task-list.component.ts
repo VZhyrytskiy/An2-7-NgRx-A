@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Task } from './../../models/task.model';
+import { TaskModel } from './../../models/task.model';
 import { TaskPromiseService } from './../../services';
 
 @Component({
@@ -9,7 +9,7 @@ import { TaskPromiseService } from './../../services';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  tasks: Array<Task>;
+  tasks: Promise<Array<TaskModel>>;
 
   constructor(
     private router: Router,
@@ -17,7 +17,7 @@ export class TaskListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getTasks().catch(err => console.log(err));
+    this.tasks = this.taskPromiseService.getTasks();
   }
 
   onCreateTask() {
@@ -25,37 +25,29 @@ export class TaskListComponent implements OnInit {
     this.router.navigate(link);
   }
 
-  onCompleteTask(task: Task): void {
+  onCompleteTask(task: TaskModel): void {
     this.updateTask(task).catch(err => console.log(err));
   }
 
-  onEditTask(task: Task): void {
+  onEditTask(task: TaskModel): void {
     const link = ['/edit', task.id];
     this.router.navigate(link);
   }
 
-  onDeleteTask(task: Task) {
+  onDeleteTask(task: TaskModel) {
     this.taskPromiseService
       .deleteTask(task)
-      .then(() => (this.tasks = this.tasks.filter(t => t.id !== task.id)))
+      .then(() => (this.tasks = this.taskPromiseService.getTasks()))
       .catch(err => console.log(err));
   }
 
-  private async getTasks() {
-    this.tasks = await this.taskPromiseService.getTasks();
-  }
-
-  private async updateTask(task: Task) {
+  private async updateTask(task: TaskModel) {
     const updatedTask = await this.taskPromiseService.updateTask({
       ...task,
       done: true
     });
 
-    if (updatedTask) {
-      const index = this.tasks.findIndex(t => t.id === updatedTask.id);
-      if (index > -1) {
-        this.tasks.splice(index, 1, updatedTask);
-      }
-    }
+    // do smth with updatedTask
+    // ...
   }
 }
