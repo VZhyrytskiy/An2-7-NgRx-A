@@ -5,7 +5,7 @@
 
     <p *ngIf="(tasksState$ | async).error as value">{{value}}</p>
 
-    <app-task 
+    <app-task
       *ngFor='let task of (tasksState$ | async).data'
       [task]="task"
       (completeTask)="onCompleteTask($event)"

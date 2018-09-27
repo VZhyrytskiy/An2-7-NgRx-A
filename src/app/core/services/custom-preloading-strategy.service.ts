@@ -4,7 +4,11 @@ import { PreloadingStrategy, Route } from '@angular/router';
 // rxjs
 import { Observable, of } from 'rxjs';
 
-@Injectable()
+import { CoreModule } from '../core.module';
+
+@Injectable({
+  providedIn: CoreModule
+})
 export class CustomPreloadingStrategyService implements PreloadingStrategy {
   private preloadedModules: string[] = [];
 

@@ -10,29 +10,33 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { concatMap, catchError } from 'rxjs/operators';
 
-import { User } from './../models/user.model';
+import { UserModel } from './../models/user.model';
 import { UsersAPI } from './../users.config';
+import { UsersServicesModule } from '../users-services.module';
+import { UsersModule } from '../users.module';
 
-@Injectable()
+@Injectable({
+  providedIn: UsersServicesModule
+})
 export class UserObservableService {
   constructor(
     private http: HttpClient,
     @Inject(UsersAPI) private usersUrl: string
   ) {}
 
-  getUsers(): Observable<User[]> {
+  getUsers(): Observable<UserModel[]> {
     return this.http
-      .get<User[]>(this.usersUrl)
+      .get<UserModel[]>(this.usersUrl)
       .pipe(catchError(this.handleError));
   }
 
-  getUser(id: number): Observable<User> {
+  getUser(id: number): Observable<UserModel> {
     const url = `${this.usersUrl}/${id}`;
 
-    return this.http.get<User>(url).pipe(catchError(this.handleError));
+    return this.http.get<UserModel>(url).pipe(catchError(this.handleError));
   }
 
-  updateUser(user: User): Observable<User> {
+  updateUser(user: UserModel): Observable<UserModel> {
     const url = `${this.usersUrl}/${user.id}`,
       body = JSON.stringify(user),
       options = {
@@ -40,11 +44,11 @@ export class UserObservableService {
       };
 
     return this.http
-      .put<User>(url, body, options)
+      .put<UserModel>(url, body, options)
       .pipe(catchError(this.handleError));
   }
 
-  createUser(user: User): Observable<User> {
+  createUser(user: UserModel): Observable<UserModel> {
     const url = this.usersUrl,
       body = JSON.stringify(user),
       options = {
@@ -59,11 +63,11 @@ export class UserObservableService {
       };
 
     return this.http
-      .post<User>(url, body, options)
+      .post<UserModel>(url, body, options)
       .pipe(catchError(this.handleError));
   }
 
-  deleteUser(user: User): Observable<User[]> {
+  deleteUser(user: UserModel): Observable<UserModel[]> {
     const url = `${this.usersUrl}/${user.id}`;
 
     return this.http.delete(url).pipe(concatMap(() => this.getUsers()));

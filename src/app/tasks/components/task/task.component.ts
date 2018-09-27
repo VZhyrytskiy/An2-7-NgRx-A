@@ -6,7 +6,7 @@ import {
   ChangeDetectionStrategy
 } from '@angular/core';
 
-import { Task } from './../../models/task.model';
+import { TaskModel } from './../../models/task.model';
 
 @Component({
   selector: 'app-task',
@@ -15,11 +15,11 @@ import { Task } from './../../models/task.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskComponent {
-  @Input() task: Task;
+  @Input() task: TaskModel;
 
-  @Output() completeTask = new EventEmitter<Task>();
-  @Output() editTask = new EventEmitter<Task>();
-  @Output() deleteTask = new EventEmitter<Task>();
+  @Output() completeTask = new EventEmitter<TaskModel>();
+  @Output() editTask = new EventEmitter<TaskModel>();
+  @Output() deleteTask = new EventEmitter<TaskModel>();
 
   onCompleteTask(): void {
     this.completeTask.emit(this.task);
