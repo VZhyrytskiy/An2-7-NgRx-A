@@ -1,33 +1,36 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Task } from './../models/task.model';
+import { TaskModel } from './../models/task.model';
+import { TasksServicesModule } from '../tasks-services.module';
 
-@Injectable()
+@Injectable({
+  providedIn: TasksServicesModule
+})
 export class TaskPromiseService {
   private tasksUrl = 'http://localhost:3000/tasks';
 
   constructor(private http: HttpClient) {}
 
-  getTasks(): Promise<Task[]> {
+  getTasks(): Promise<TaskModel[]> {
     return this.http
       .get(this.tasksUrl)
       .toPromise()
-      .then(response => <Task[]>response)
+      .then(response => <TaskModel[]>response)
       .catch(this.handleError);
   }
 
-  getTask(id: number): Promise<Task> {
+  getTask(id: number): Promise<TaskModel> {
     const url = `${this.tasksUrl}/${id}`;
 
     return this.http
       .get(url)
       .toPromise()
-      .then(response => <Task>response)
+      .then(response => <TaskModel>response)
       .catch(this.handleError);
   }
 
-  updateTask(task: Task): Promise<Task> {
+  updateTask(task: TaskModel): Promise<TaskModel> {
     const url = `${this.tasksUrl}/${task.id}`,
       body = JSON.stringify(task),
       options = {
@@ -37,11 +40,11 @@ export class TaskPromiseService {
     return this.http
       .put(url, body, options)
       .toPromise()
-      .then(response => <Task>response)
+      .then(response => <TaskModel>response)
       .catch(this.handleError);
   }
 
-  createTask(task: Task): Promise<Task> {
+  createTask(task: TaskModel): Promise<TaskModel> {
     const url = this.tasksUrl,
       body = JSON.stringify(task),
       options = {
@@ -51,11 +54,11 @@ export class TaskPromiseService {
     return this.http
       .post(url, body, options)
       .toPromise()
-      .then(response => <Task>response)
+      .then(response => <TaskModel>response)
       .catch(this.handleError);
   }
 
-  deleteTask(task: Task): Promise<Task> {
+  deleteTask(task: TaskModel): Promise<TaskModel> {
     const url = `${this.tasksUrl}/${task.id}`;
 
     return (
