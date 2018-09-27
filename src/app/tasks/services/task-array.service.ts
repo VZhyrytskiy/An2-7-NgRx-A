@@ -1,35 +1,35 @@
 import { Injectable } from '@angular/core';
 
-import { Task } from './../models/task.model';
+import { TaskModel } from './../models/task.model';
+import { TasksServicesModule } from '../tasks-services.module';
 
 const taskList = [
-  new Task(1, 'Estimate', 1, 8, 8, true),
-  new Task(2, 'Create', 2, 8, 4, false),
-  new Task(3, 'Deploy', 3, 8, 0, false)
+  new TaskModel(1, 'Estimate', 1, 8, 8, true),
+  new TaskModel(2, 'Create', 2, 8, 4, false),
+  new TaskModel(3, 'Deploy', 3, 8, 0, false)
 ];
 
 const taskListPromise = Promise.resolve(taskList);
 
 @Injectable({
-  // When we provide this service in TasksModule, we get circular dependency
-  providedIn: 'root' // TasksModule
+  providedIn: TasksServicesModule
 })
 export class TaskArrayService {
-  getTasks(): Promise<Task[]> {
+  getTasks(): Promise<TaskModel[]> {
     return taskListPromise;
   }
 
-  getTask(id: number | string): Promise<Task> {
+  getTask(id: number | string): Promise<TaskModel> {
     return this.getTasks()
       .then(tasks => tasks.find(task => task.id === +id))
       .catch(() => Promise.reject('Error in getTask method'));
   }
 
-  addTask(task: Task): void {
+  createTask(task: TaskModel): void {
     taskList.push(task);
   }
 
-  updateTask(task: Task): void {
+  updateTask(task: TaskModel): void {
     const i = taskList.findIndex(t => t.id === task.id);
 
     if (i > -1) {
@@ -37,9 +37,11 @@ export class TaskArrayService {
     }
   }
 
-  completeTask(task: Task): void {
+  deleteTask(task: TaskModel): void {
     const i = taskList.findIndex(t => t.id === task.id);
 
-    taskList[i].done = true;
+    if (i > -1) {
+      taskList.splice(i, 1);
+    }
   }
 }
