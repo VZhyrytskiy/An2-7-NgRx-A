@@ -3,8 +3,8 @@
         (click)="onCreateTask()">New Task</button>
     <br><br>
 
-    <app-task 
-      *ngFor="let task of tasks" 
+    <app-task
+      *ngFor="let task of tasks | async"
       [task]="task"
       (completeTask)="onCompleteTask($event)"
       (editTask)="onEditTask($event)"
