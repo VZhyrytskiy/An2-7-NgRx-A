@@ -11,7 +11,7 @@ import * as UsersActions from './../../../core/+store/users/users.actions';
 import * as RouterActions from './../../../core/+store/router/router.actions';
 
 // rxjs
-import { Observable, Subscription, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import {
