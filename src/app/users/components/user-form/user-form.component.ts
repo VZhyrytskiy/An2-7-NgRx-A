@@ -9,7 +9,7 @@ import * as RouterActions from './../../../core/+store/router/router.actions';
 
 // rxjs
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, pluck } from 'rxjs/operators';
 
 import { DialogService, CanComponentDeactivate } from './../../../core';
 import { UserModel } from './../../models/user.model';
@@ -28,8 +28,8 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
   ) {}
 
   ngOnInit(): void {
-    this.route.data.subscribe(data => {
-      this.user = { ...data.user };
+    this.route.data.pipe(pluck('user')).subscribe((user: UserModel) => {
+      this.user = { ...user };
     });
   }
 
