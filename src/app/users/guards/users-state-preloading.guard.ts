@@ -15,7 +15,7 @@ import { UsersServicesModule } from '../users-services.module';
 export class UsersStatePreloadingGuard implements CanActivate {
   constructor(private store: Store<AppState>) {}
 
-  canActivate() {
+  canActivate(): Observable<boolean> {
     return this.checkStore().pipe(
       switchMap(() => of(true)),
       catchError(() => of(false))
