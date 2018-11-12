@@ -13,7 +13,6 @@ import { concatMap, catchError } from 'rxjs/operators';
 import { UserModel } from './../models/user.model';
 import { UsersAPI } from './../users.config';
 import { UsersServicesModule } from '../users-services.module';
-import { UsersModule } from '../users.module';
 
 @Injectable({
   providedIn: UsersServicesModule

@@ -48,8 +48,8 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
 
     const method = user.id ? 'updateUser' : 'createUser';
     this.sub = this.userObservableService[method](user).subscribe(
-      () => {
-        this.originalUser = { ...this.user };
+      savedUser => {
+        this.originalUser = { ...savedUser };
         user.id
           ? // optional parameter: http://localhost:4200/users;editedUserID=2
             this.router.navigate(['users', { editedUserID: user.id }])
