@@ -47,7 +47,8 @@ export class TaskListComponent implements OnInit {
       done: true
     });
 
-    // do smth with updatedTask
-    // ...
+    const tasks: TaskModel[] = await this.tasks;
+    const index = tasks.findIndex(t => t.id === updatedTask.id);
+    tasks[index] = { ...updatedTask };
   }
 }
