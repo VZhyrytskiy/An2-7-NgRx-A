@@ -35,9 +35,11 @@ export class MyInterceptor implements HttpInterceptor {
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
           // do stuff with response
-          console.log('Response Interceptor');
-          console.log(event);
-          console.log(event.body);
+          if (event.url.includes('users')) {
+            console.log('Response Interceptor:');
+            console.log(event);
+            console.log(event.body);
+          }
           return event;
         }
       })
