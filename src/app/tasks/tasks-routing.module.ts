@@ -1,7 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { MetaDefinition } from '@angular/platform-browser';
 
 import { TaskListComponent, TaskFormComponent } from './components';
+
+const metaTags: Array<MetaDefinition> = [
+  {
+    name: 'description',
+    content: 'Task Manager Application. This is an ASP application'
+  },
+  {
+    name: 'keywords',
+    content: 'Angular 4 tutorial, SPA Application, Routing'
+  }
+];
 
 const routes: Routes = [
   {
@@ -9,14 +21,7 @@ const routes: Routes = [
     component: TaskListComponent,
     data: {
       title: 'Task Manager',
-      meta: [{
-        name: 'description',
-        content: 'Task Manager Application. This is an ASP application'
-      },
-      {
-        name: 'keywords',
-        content: 'Angular 4 tutorial, SPA Application, Routing'
-      }]
+      meta: metaTags
     }
   },
   {
