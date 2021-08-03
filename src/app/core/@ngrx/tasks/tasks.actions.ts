@@ -28,8 +28,3 @@ export const deleteTask = createAction(
   '[Task List Page] DELETE_TASK',
   props<{ task: Task }>()
 );
-
-export const doneTask = createAction(
-  '[Tasks] DONE_TASK',
-  props<{ task: Task }>()
-);
