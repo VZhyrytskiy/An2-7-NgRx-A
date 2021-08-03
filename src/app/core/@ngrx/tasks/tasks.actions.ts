@@ -10,7 +10,7 @@ export const getTasksSuccess = createAction(
 );
 export const getTasksError = createAction(
   '[Get Tasks Effect] GET_TASKS_ERROR',
-  props<{ error: Error | string }>()
+  props<{ error: Error | string | null }>()
 );
 
 export const getTask = createAction(

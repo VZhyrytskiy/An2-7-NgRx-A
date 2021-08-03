@@ -15,7 +15,7 @@ const reducer = createReducer(
   }),
   on(TasksActions.getTasksSuccess, (state, { tasks }) => {
     console.log('GET_TASKS_SUCCESS action being handled!');
-    const data = [...tasks];
+    const data = [...tasks] as TaskModel[];
     return {
       ...state,
       data,
@@ -23,6 +23,7 @@ const reducer = createReducer(
       loaded: true
     };
   }),
+
   on(TasksActions.getTasksError, (state, { error }) => {
     console.log('GET_TASKS_ERROR action being handled!');
     return {
