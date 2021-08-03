@@ -13,7 +13,7 @@ import { TaskPromiseService } from './../../services';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  tasks: Promise<Array<TaskModel>>;
+  tasks!: Promise<Array<TaskModel>>;
 
   constructor(
     private router: Router,
@@ -21,7 +21,7 @@ export class TaskListComponent implements OnInit {
     private store: Store<AppState>
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     console.log('We have a store! ', this.store);
     this.tasks = this.taskPromiseService.getTasks();
   }
