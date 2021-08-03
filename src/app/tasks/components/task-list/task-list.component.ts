@@ -17,8 +17,8 @@ import { TaskPromiseService } from './../../services';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  tasks: Promise<Array<TaskModel>>;
-  tasksState$: Observable<TasksState>;
+  tasks!: Promise<Array<TaskModel>>;
+  tasksState$!: Observable<TasksState>;
 
   constructor(
     private router: Router,
@@ -26,7 +26,7 @@ export class TaskListComponent implements OnInit {
     private store: Store<AppState>
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     console.log('We have a store! ', this.store);
     this.tasksState$ = this.store.select('tasks');
   }
@@ -41,6 +41,7 @@ export class TaskListComponent implements OnInit {
     // taskToComplete is a plain object
     const taskToComplete: Task = { ...task };
     this.store.dispatch(TasksActions.completeTask({ task: taskToComplete }));
+
   }
 
   onEditTask(task: TaskModel): void {
