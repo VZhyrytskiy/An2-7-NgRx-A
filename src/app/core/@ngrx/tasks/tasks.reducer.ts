@@ -2,6 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 import { TasksState, initialTasksState } from './tasks.state';
 import * as TasksActions from './tasks.actions';
+import { TaskModel } from './../../../tasks/models/task.model';
 
 const reducer = createReducer(
   initialTasksState,
@@ -53,7 +54,7 @@ const reducer = createReducer(
     const id = task.id;
     const data = state.data.map(t => {
       if (t.id === id) {
-        return { ...task, done: true };
+        return { ...task, done: true } as TaskModel;
       }
 
       return t;

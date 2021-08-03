@@ -16,11 +16,11 @@ import { Task, TaskModel } from './../../models/task.model';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  tasksState$: Observable<TasksState>;
+  tasksState$!: Observable<TasksState>;
 
   constructor(private router: Router, private store: Store<AppState>) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     console.log('We have a store! ', this.store);
     this.tasksState$ = this.store.select('tasks');
 
@@ -37,6 +37,7 @@ export class TaskListComponent implements OnInit {
     // taskToComplete is a plain object
     const taskToComplete: Task = { ...task };
     this.store.dispatch(TasksActions.completeTask({ task: taskToComplete }));
+
   }
 
   onEditTask(task: TaskModel): void {
