@@ -1,5 +1,5 @@
 export interface Task {
-  id?: number;
+  id?: number | null;
   action?: string;
   priority?: number;
   estHours?: number;
