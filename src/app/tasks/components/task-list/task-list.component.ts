@@ -9,18 +9,18 @@ import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 // rxjs
 import { Observable } from 'rxjs';
 
-import { Task, TaskModel } from './../../models/task.model';
+import { TaskModel } from './../../models/task.model';
 
 @Component({
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  tasksState$: Observable<TasksState>;
+  tasksState$!: Observable<TasksState>;
 
   constructor(private router: Router, private store: Store<AppState>) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     console.log('We have a store! ', this.store);
     this.tasksState$ = this.store.select('tasks');
 
@@ -33,9 +33,7 @@ export class TaskListComponent implements OnInit {
   }
 
   onCompleteTask(task: TaskModel): void {
-    // task is not plain object
-    // taskToComplete is a plain object
-    const taskToComplete: Task = { ...task, done: true };
+    const taskToComplete: TaskModel = { ...task, done: true };
     this.store.dispatch(TasksActions.completeTask({ task: taskToComplete }));
   }
 
@@ -44,8 +42,7 @@ export class TaskListComponent implements OnInit {
     this.router.navigate(link);
   }
 
-  onDeleteTask(task: TaskModel) {
-    const taskToDelete: Task = { ...task };
-    this.store.dispatch(TasksActions.deleteTask({ task: taskToDelete }));
+  onDeleteTask(task: TaskModel): void {
+    this.store.dispatch(TasksActions.deleteTask({ task }));
   }
 }
