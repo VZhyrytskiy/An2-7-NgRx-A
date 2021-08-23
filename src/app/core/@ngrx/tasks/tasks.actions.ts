@@ -1,12 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 
-import { Task, TaskModel } from './../../../tasks/models/task.model';
+import { TaskModel } from './../../../tasks/models/task.model';
 
 export const getTasks = createAction('[Task List Page (App)] GET_TASKS');
 
 export const getTasksSuccess = createAction(
   '[Get Tasks Effect] GET_TASKS_SUCCEESS',
-  props<{ tasks: Task[] }>()
+  props<{ tasks: TaskModel[] }>()
 );
 export const getTasksError = createAction(
   '[Get Tasks Effect] GET_TASKS_ERROR',
@@ -20,7 +20,7 @@ export const getTask = createAction(
 
 export const getTaskSuccess = createAction(
   '[Get Task Effect] GET_TASK_SUCCESS',
-  props<{ task: Task }>()
+  props<{ task: TaskModel }>()
 );
 
 export const getTaskError = createAction(
@@ -30,20 +30,20 @@ export const getTaskError = createAction(
 
 export const createTask = createAction(
   '[Task Form Page] CREATE_TASK',
-  props<{ task: Task }>()
+  props<{ task: TaskModel }>()
 );
 
 export const updateTask = createAction(
   '[Task Form Page] UPDATE_TASK',
-  props<{ task: Task }>()
+  props<{ task: TaskModel }>()
 );
 
 export const completeTask = createAction(
   '[Task List Page] COMPLETE_TASK',
-  props<{ task: Task }>()
+  props<{ task: TaskModel }>()
 );
 
 export const deleteTask = createAction(
   '[Task List Page] DELETE_TASK',
-  props<{ task: Task }>()
+  props<{ task: TaskModel }>()
 );
