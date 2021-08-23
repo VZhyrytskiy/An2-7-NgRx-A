@@ -92,7 +92,7 @@ export class TasksEffects {
   deleteTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(TasksActions.deleteTask),
-      pluck('task'),
+      map(action => action.task),
       concatMap((task: TaskModel) =>
         this.taskPromiseService
           .deleteTask(task)
