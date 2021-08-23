@@ -9,7 +9,7 @@ import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 // rxjs
 import { Observable } from 'rxjs';
 
-import { Task, TaskModel } from './../../models/task.model';
+import { TaskModel } from './../../models/task.model';
 import { TaskPromiseService } from './../../services';
 
 @Component({
@@ -37,11 +37,7 @@ export class TaskListComponent implements OnInit {
   }
 
   onCompleteTask(task: TaskModel): void {
-    // task is not plain object
-    // taskToComplete is a plain object
-    const taskToComplete: Task = { ...task };
-    this.store.dispatch(TasksActions.completeTask({ task: taskToComplete }));
-
+    this.store.dispatch(TasksActions.completeTask({ task }));
   }
 
   onEditTask(task: TaskModel): void {

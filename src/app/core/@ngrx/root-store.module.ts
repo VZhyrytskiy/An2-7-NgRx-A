@@ -17,7 +17,7 @@ import { TasksStoreModule } from './tasks/tasks-store.module';
           strictStateImmutability: true,      // default value is true
           strictActionImmutability: true,     // default value is true
           strictStateSerializability: true,   // default value is false
-          strictActionSerializability: true,  // default value is false
+          strictActionSerializability: false,  // default value is false
           strictActionWithinNgZone: true,      // default value is false
           strictActionTypeUniqueness: true    // default value is false
         }
