@@ -3,7 +3,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 // @NgRx
 import { Store } from '@ngrx/store';
-import { selectTasksState, TasksState } from './../../../core/@ngrx';
+import { AppState, selectTasksState, TasksState } from './../../../core/@ngrx';
 import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 
 // rxjs
@@ -24,7 +24,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private store: Store
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
