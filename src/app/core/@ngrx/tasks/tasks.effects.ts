@@ -15,10 +15,10 @@ import * as TasksActions from './tasks.actions';
 
 // rxjs
 import { Observable } from 'rxjs';
-import { concatMap, pluck, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { concatMap, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../../tasks/services';
-import { TaskModel, Task } from '../../../tasks/models/task.model';
+import { TaskModel } from '../../../tasks/models/task.model';
 
 @Injectable()
 export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
@@ -42,7 +42,7 @@ export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
         //      .getTasks()
         //      .pipe(takeUntil(this.actions$.pipe(ofType(TasksActions.TaskListComponentIsDestroyed))
         // If you use HttpClient, the stream is finite,
-        // so you have no needs to unsibscribe
+        // so you have no needs to unsubscribe
         this.taskPromiseService
           .getTasks()
           .then(tasks => TasksActions.getTasksSuccess({ tasks }))
@@ -54,7 +54,7 @@ export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
   getTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(TasksActions.getTask),
-      pluck('taskID'),
+      map(action => action.taskID),
       switchMap(taskID =>
         this.taskPromiseService
           .getTask(taskID)
@@ -67,11 +67,11 @@ export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
   updateTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(TasksActions.updateTask, TasksActions.completeTask),
-      pluck('task'),
+      map(action => action.task),
       concatMap((task: TaskModel) =>
         this.taskPromiseService
           .updateTask(task)
-          .then((updatedTask: Task) => {
+          .then((updatedTask: TaskModel) => {
             this.router.navigate(['/home']);
             return TasksActions.updateTaskSuccess({ task: updatedTask });
           })
@@ -83,11 +83,11 @@ export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
   createTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(TasksActions.createTask),
-      pluck('task'),
+      map(action => action.task),
       concatMap((task: TaskModel) =>
         this.taskPromiseService
           .createTask(task)
-          .then((createdTask: Task) => {
+          .then((createdTask: TaskModel) => {
             this.router.navigate(['/home']);
             return TasksActions.createTaskSuccess({ task: createdTask });
           })
@@ -99,7 +99,7 @@ export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
   deleteTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(TasksActions.deleteTask),
-      pluck('task'),
+      map(action => action.task),
       concatMap((task: TaskModel) =>
         this.taskPromiseService
           .deleteTask(task)
