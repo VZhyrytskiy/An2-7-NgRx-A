@@ -76,11 +76,11 @@ export class TasksEffects {
   createTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(TasksActions.createTask),
-      pluck('task'),
+      map(action => action.task),
       concatMap((task: TaskModel) =>
         this.taskPromiseService
           .createTask(task)
-          .then((createdTask: Task) => {
+          .then((createdTask: TaskModel) => {
             this.router.navigate(['/home']);
             return TasksActions.createTaskSuccess({ task: createdTask });
           })
