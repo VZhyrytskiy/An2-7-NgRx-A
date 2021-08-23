@@ -1,12 +1,4 @@
-export interface Task {
-  id?: number | null;
-  action?: string;
-  priority?: number;
-  estHours?: number;
-  actHours?: number;
-  done?: boolean;
-}
-export class TaskModel implements Task {
+export class TaskModel {
   constructor(
     public id: number | null = null,
     public action: string = '',
