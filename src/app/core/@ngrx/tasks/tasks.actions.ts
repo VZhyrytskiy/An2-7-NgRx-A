@@ -10,7 +10,7 @@ export const getTasksSuccess = createAction(
 );
 export const getTasksError = createAction(
   '[Get Tasks Effect] GET_TASKS_ERROR',
-  props<{ error: Error | string }>()
+  props<{ error: Error | string | null }>()
 );
 
 export const getTask = createAction(
@@ -45,10 +45,5 @@ export const completeTask = createAction(
 
 export const deleteTask = createAction(
   '[Task List Page] DELETE_TASK',
-  props<{ task: Task }>()
-);
-
-export const doneTask = createAction(
-  '[Tasks] DONE_TASK',
   props<{ task: Task }>()
 );

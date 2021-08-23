@@ -32,7 +32,7 @@ export class TasksEffects {
         //      .getTasks()
         //      .pipe(takeUntil(this.actions$.pipe(ofType(TasksActions.TaskListComponentIsDestroyed))
         // If you use HttpClient, the stream is finite,
-        // so you have no needs to unsibscribe
+        // so you have no needs to unsubscribe
         this.taskPromiseService
           .getTasks()
           .then(tasks => TasksActions.getTasksSuccess({ tasks }))

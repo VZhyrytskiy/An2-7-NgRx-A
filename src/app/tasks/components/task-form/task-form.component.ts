@@ -18,7 +18,7 @@ import { TaskPromiseService } from './../../services';
   styleUrls: ['./task-form.component.css']
 })
 export class TaskFormComponent implements OnInit, OnDestroy {
-  task: TaskModel;
+  task!: TaskModel;
 
   private componentDestroyed$: Subject<void> = new Subject<void>();
 
@@ -36,7 +36,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       next: (tasksState: TasksState) => {
         this.task = { ...tasksState.selectedTask } as TaskModel;
       },
-      error(err) {
+      error(err: any) {
         console.log(err);
       },
       complete() {
@@ -67,7 +67,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     this.componentDestroyed$.complete();
   }
 
-  onSaveTask() {
+  onSaveTask(): void {
     const task = { ...this.task } as TaskModel;
 
     const method = task.id ? 'updateTask' : 'createTask';

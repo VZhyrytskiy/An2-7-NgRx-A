@@ -2,6 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 import { TasksState, initialTasksState } from './tasks.state';
 import * as TasksActions from './tasks.actions';
+import { TaskModel, Task } from './../../../tasks/models/task.model';
 
 const reducer = createReducer(
   initialTasksState,
@@ -12,9 +13,9 @@ const reducer = createReducer(
       loading: true
     };
   }),
-  on(TasksActions.getTasksSuccess, (state, { tasks }) => {
+  on(TasksActions.getTasksSuccess, (state, props) => {
     console.log('GET_TASKS_SUCCESS action being handled!');
-    const data = [...tasks];
+    const data = [...props.tasks] as TaskModel[];
     return {
       ...state,
       data,
@@ -75,7 +76,7 @@ const reducer = createReducer(
     const id = task.id;
     const data = state.data.map(t => {
       if (t.id === id) {
-        return { ...task, done: true };
+        return { ...task, done: true } as Task;
       }
 
       return t;
