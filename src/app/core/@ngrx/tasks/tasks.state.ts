@@ -1,7 +1,7 @@
-import { Task } from './../../../tasks/models/task.model';
+import { TaskModel } from './../../../tasks/models/task.model';
 export interface TasksState {
-  data: ReadonlyArray<Task>;
-  selectedTask: Readonly<Task> | null;
+  data: ReadonlyArray<TaskModel>;
+  selectedTask: Readonly<TaskModel> | null;
   readonly loading: boolean;
   readonly loaded: boolean;
   readonly error: Error | string | null;
