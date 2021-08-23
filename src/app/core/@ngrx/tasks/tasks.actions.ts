@@ -6,7 +6,7 @@ export const getTasks = createAction('[Task List Page (App)] GET_TASKS');
 
 export const getTasksSuccess = createAction(
   '[Get Tasks Effect] GET_TASKS_SUCCEESS',
-  props<{ tasks: Task[] }>()
+  props<{ tasks: TaskModel[] }>()
 );
 export const getTasksError = createAction(
   '[Get Tasks Effect] GET_TASKS_ERROR',
