@@ -26,7 +26,7 @@ import { environment } from './../../../environments/environment';
         strictStateSerializability: true,   // default value is false
         // router action is not serializable
         // set false
-        strictActionSerializability: true,  // default value is false
+        strictActionSerializability: false,  // default value is false
         strictActionWithinNgZone: true,      // default value is false
         strictActionTypeUniqueness: true    // default value is false
       }
