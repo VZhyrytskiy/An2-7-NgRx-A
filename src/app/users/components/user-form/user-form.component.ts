@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 
 // rxjs
 import { Observable, of } from 'rxjs';
-import { pluck, switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
@@ -19,7 +19,7 @@ import { UserModel, User } from './../../models/user.model';
   styleUrls: ['./user-form.component.css']
 })
 export class UserFormComponent implements OnInit, CanComponentDeactivate {
-  user: UserModel;
+  user!: UserModel;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,13 +31,13 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
   ngOnInit(): void {
     // data is an observable object
     // which contains custom and resolve data
-    this.route.data.pipe(pluck('user')).subscribe((user: UserModel) => {
+    this.route.data.pipe(map(data => data.user)).subscribe((user: UserModel) => {
       this.user = { ...user };
     });
   }
 
-  onSaveUser() {
-    const user = { ...this.user } as User;
+  onSaveUser(): void {
+    const user = { ...this.user };
 
     if (user.id) {
       this.store.dispatch(UsersActions.updateUser({ user }));
@@ -46,7 +46,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  onGoBack() {
+  onGoBack(): void {
     this.location.back();
   }
 
@@ -55,7 +55,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const flags = [];
+    const flags: boolean[] = [];
 
     return this.store.select(selectUsersOriginalUser).pipe(
       switchMap((originalUser: UserModel) => {

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router, Resolve } from '@angular/router';
 
 // rxjs
-import { Observable, of } from 'rxjs';
-import { delay, map, catchError, finalize, tap, take } from 'rxjs/operators';
+import { EMPTY, Observable, of } from 'rxjs';
+import { delay, map, catchError, finalize, tap, take, switchMap } from 'rxjs/operators';
 
 // NgRx
 import { Store } from '@ngrx/store';
@@ -23,26 +23,26 @@ export class UserResolveGuard implements Resolve<UserModel> {
     private spinner: SpinnerService
   ) {}
 
-  resolve(): Observable<UserModel> | null {
+  resolve(route: ActivatedRouteSnapshot): Observable<UserModel> {
     console.log('UserResolve Guard is called');
     this.spinner.show();
 
     return this.store.select(selectSelectedUserByUrl).pipe(
       tap(user => this.store.dispatch(UsersActions.setOriginalUser({ user }))),
       delay(2000),
-      map((user: UserModel) => {
+      switchMap((user: UserModel) => {
         if (user) {
-          return user;
+          return of(user);
         } else {
           this.router.navigate(['/users']);
-          return null;
+          return EMPTY;
         }
       }),
       take(1),
       catchError(() => {
         this.router.navigate(['/users']);
         // catchError MUST return observable
-        return of(null);
+        return EMPTY;
       }),
       finalize(() => this.spinner.hide())
     );
