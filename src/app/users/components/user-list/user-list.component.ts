@@ -5,15 +5,16 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as UsersActions from './../../../core/@ngrx/users/users.actions';
 import {
+  AppState,
   selectUsers,
   selectUsersError,
   selectEditedUser
 } from './../../../core/@ngrx';
 
 // rxjs
-import { EMPTY, Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
-import { UserModel, User } from './../../models/user.model';
+import { UserModel } from './../../models/user.model';
 import { AutoUnsubscribe } from './../../../core/decorators';
 
 @Component({
@@ -26,9 +27,9 @@ export class UserListComponent implements OnInit {
   usersError$!: Observable<Error | string | null>;
 
   private subscription!: Subscription;
-  private editedUser!: UserModel;
+  private editedUser!: UserModel | null;
 
-  constructor(private router: Router, private store: Store) {}
+  constructor(private router: Router, private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.users$ = this.store.select(selectUsers);
@@ -37,8 +38,8 @@ export class UserListComponent implements OnInit {
 
     // listen editedUserID from UserFormComponent
     this.subscription = this.store.select(selectEditedUser).subscribe({
-      next: (user: UserModel) => {
-        this.editedUser = { ...user };
+      next: (user: UserModel | null) => {
+        this.editedUser = { ...user } as UserModel;
         console.log(
           `Last time you edited user ${JSON.stringify(this.editedUser)}`
         );

@@ -3,11 +3,11 @@ import { Router, Resolve } from '@angular/router';
 
 // rxjs
 import { EMPTY, Observable, of } from 'rxjs';
-import { delay, map, catchError, finalize, tap, take, switchMap } from 'rxjs/operators';
+import { delay, catchError, finalize, tap, take, switchMap } from 'rxjs/operators';
 
 // NgRx
 import { Store } from '@ngrx/store';
-import { selectSelectedUserByUrl } from './../../core/@ngrx';
+import { AppState, selectSelectedUserByUrl } from './../../core/@ngrx';
 import * as UsersActions from './../../core/@ngrx/users/users.actions';
 
 import { UserModel } from './../models/user.model';
@@ -18,7 +18,7 @@ import { SpinnerService } from './../../widgets';
 })
 export class UserResolveGuard implements Resolve<UserModel> {
   constructor(
-    private store: Store,
+    private store: Store<AppState>,
     private router: Router,
     private spinner: SpinnerService
   ) {}

@@ -8,11 +8,11 @@ import { map, switchMap } from 'rxjs/operators';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
-import { selectUsersOriginalUser } from './../../../core/@ngrx';
+import { AppState, selectUsersOriginalUser } from './../../../core/@ngrx';
 import * as UsersActions from './../../../core/@ngrx/users/users.actions';
 
 import { DialogService, CanComponentDeactivate } from './../../../core';
-import { UserModel, User } from './../../models/user.model';
+import { UserModel } from './../../models/user.model';
 
 @Component({
   templateUrl: './user-form.component.html',
@@ -25,7 +25,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
     private route: ActivatedRoute,
     private location: Location,
     private dialogService: DialogService,
-    private store: Store
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
@@ -58,14 +58,13 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
     const flags: boolean[] = [];
 
     return this.store.select(selectUsersOriginalUser).pipe(
-      switchMap((originalUser: UserModel) => {
-        for (const key in originalUser) {
-          if (originalUser[key] === this.user[key]) {
+      switchMap((originalUser: UserModel | null) => {
+        (Object.keys(originalUser!) as (keyof UserModel)[]).map(key => {
+          if (originalUser![key] === this.user[key]) {
             flags.push(true);
-          } else {
-            flags.push(false);
           }
-        }
+          flags.push(false);
+        });
 
         if (flags.every(el => el)) {
           return of(true);
