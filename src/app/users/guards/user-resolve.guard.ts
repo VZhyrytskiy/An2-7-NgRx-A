@@ -23,7 +23,7 @@ export class UserResolveGuard implements Resolve<UserModel> {
     private spinner: SpinnerService
   ) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<UserModel> {
+  resolve(): Observable<UserModel> {
     console.log('UserResolve Guard is called');
     this.spinner.show();
 
