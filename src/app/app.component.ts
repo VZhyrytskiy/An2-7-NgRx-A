@@ -3,7 +3,7 @@ import { Title, Meta } from '@angular/platform-browser';
 import { Router, RouterOutlet, NavigationEnd, NavigationStart } from '@angular/router';
 
 // @ngrx
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import {
   AppState,
   selectQueryParams,
