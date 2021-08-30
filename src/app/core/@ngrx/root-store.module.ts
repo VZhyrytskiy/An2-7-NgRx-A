@@ -27,7 +27,7 @@ import { UsersStoreModule } from './users/users-store.module';
         strictStateSerializability: true,   // default value is false
         // router action is not serializable
         // set false
-        strictActionSerializability: true,  // default value is false
+        strictActionSerializability: false,  // default value is false
         strictActionWithinNgZone: true,      // default value is false
         strictActionTypeUniqueness: true    // default value is false
       }

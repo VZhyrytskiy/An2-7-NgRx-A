@@ -33,15 +33,3 @@ export const selectSelectedTaskByUrl = createSelector(
   }
 );
 
-export const selectTasksDataPartial = createSelector(
-  selectTasksState,
-  (state: TasksState, props: any) => {
-    if (props && props.count) {
-      return state.data.slice(0, props.count);
-    } else {
-      return state.data;
-    }
-
-  }
-);
-
