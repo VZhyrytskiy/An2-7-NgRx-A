@@ -18,19 +18,18 @@ export class MessagesComponent implements OnInit {
     private store: Store
   ) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
-  onClose() {
+  onClose(): void {
     this.store.dispatch(
       RouterActions.go({
         path: [{ outlets: { messages: null } }]
       })
     );
-
     this.messagesService.isDisplayed = false;
   }
 
-  onSend() {
+  onSend(): void {
     if (this.message) {
       this.messagesService.addMessage(this.message);
       this.message = '';

@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 
 // rxjs
-import { Observable, of } from 'rxjs';
-import { delay, map, catchError, finalize, tap, take } from 'rxjs/operators';
+import { EMPTY, Observable, of } from 'rxjs';
+import { delay, catchError, finalize, tap, take, switchMap } from 'rxjs/operators';
 
 // NgRx
 import { Store } from '@ngrx/store';
-import { selectSelectedUserByUrl } from './../../core/@ngrx';
+import { AppState, selectSelectedUserByUrl } from './../../core/@ngrx';
 import * as UsersActions from './../../core/@ngrx/users/users.actions';
 import * as RouterActions from './../../core/@ngrx/router/router.actions';
 
@@ -19,20 +19,20 @@ import { SpinnerService } from './../../widgets';
 })
 export class UserResolveGuard implements Resolve<UserModel> {
   constructor(
-    private store: Store,
+    private store: Store<AppState>,
     private spinner: SpinnerService
   ) {}
 
-  resolve(): Observable<UserModel> | null {
+  resolve(): Observable<UserModel> {
     console.log('UserResolve Guard is called');
     this.spinner.show();
 
     return this.store.select(selectSelectedUserByUrl).pipe(
       tap(user => this.store.dispatch(UsersActions.setOriginalUser({ user }))),
       delay(2000),
-      map((user: UserModel) => {
+      switchMap((user: UserModel) => {
         if (user) {
-          return user;
+          return of(user);
         } else {
           this.store.dispatch(
             RouterActions.go({
@@ -40,7 +40,7 @@ export class UserResolveGuard implements Resolve<UserModel> {
             })
           );
 
-          return null;
+          return EMPTY;
         }
       }),
       take(1),
@@ -52,7 +52,7 @@ export class UserResolveGuard implements Resolve<UserModel> {
         );
 
         // catchError MUST return observable
-        return of(null);
+        return EMPTY;
       }),
       finalize(() => this.spinner.hide())
     );

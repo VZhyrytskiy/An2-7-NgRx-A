@@ -15,7 +15,7 @@ import { AuthService } from './../../../core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  message: string;
+  message!: string;
 
   private unsubscribe: Subject<void> = new Subject();
 
@@ -24,17 +24,17 @@ export class LoginComponent implements OnInit, OnDestroy {
     private store: Store
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.setMessage();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     console.log('[takeUntil ngOnDestroy]');
     // this.unsubscribe.next();
     this.unsubscribe.complete();
   }
 
-  onLogin() {
+  onLogin(): void {
     this.message = 'Trying to log in ...';
     const observer = {
       next: () => {
@@ -73,12 +73,12 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe(observer);
   }
 
-  onLogout() {
+  onLogout(): void {
     this.authService.logout();
     this.setMessage();
   }
 
-  private setMessage() {
+  private setMessage(): void {
     this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
   }
 }
