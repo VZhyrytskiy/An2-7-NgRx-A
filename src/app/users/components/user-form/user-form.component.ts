@@ -6,6 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
+import { AppState } from './../../../core/@ngrx';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 import { selectSelectedUserByUrl } from 'src/app/core/@ngrx/data/entity-store.module';
 
@@ -14,7 +15,7 @@ import {
   DialogService,
   CanComponentDeactivate
 } from './../../../core';
-import { UserModel, User } from './../../models/user.model';
+import { UserModel } from './../../models/user.model';
 import { EntityCollectionService, EntityServices } from '@ngrx/data';
 import { NgForm } from '@angular/forms';
 
@@ -24,18 +25,18 @@ import { NgForm } from '@angular/forms';
 })
 @AutoUnsubscribe()
 export class UserFormComponent implements OnInit, CanComponentDeactivate {
-  user: UserModel;
+  user!: UserModel;
 
   @ViewChild('form', { static: false })
-  userForm: NgForm;
+  userForm!: NgForm;
 
-  private sub: Subscription;
+  private sub!: Subscription;
   private userService: EntityCollectionService<User>;
   private isSubmitClick = false;
 
   constructor(
     private dialogService: DialogService,
-    private store: Store,
+    private store: Store<AppState>,
     entitytServices: EntityServices
   ) {
     // получить сервис для entity User
@@ -45,11 +46,13 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
   ngOnInit(): void {
     this.sub = this.store
       .select(selectSelectedUserByUrl)
-      .subscribe((user: UserModel) => (this.user = { ...user }));
+      .subscribe((user: UserModel) => {
+        this.user = { ...user }
+      });
   }
 
-  onSaveUser() {
-    const user = { ...this.user } as User;
+  onSaveUser(): void {
+    const user = { ...this.user };
     this.isSubmitClick = true;
 
     if (user.id) {
@@ -61,7 +64,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
     this.onGoBack();
   }
 
-  onGoBack() {
+  onGoBack(): void {
     this.store.dispatch(RouterActions.back());
   }
 

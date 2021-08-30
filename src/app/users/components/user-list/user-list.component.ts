@@ -5,12 +5,13 @@ import { Store } from '@ngrx/store';
 import { EntityServices, EntityCollectionService } from '@ngrx/data';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 import { selectEditedUser } from './../../../core/@ngrx/data/entity-store.module';
+import { AppState } from './../../../core/@ngrx';
 
 // rxjs
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { UserModel, User } from './../../models/user.model';
+import { UserModel } from './../../models/user.model';
 import { AutoUnsubscribe } from './../../../core/decorators';
 
 @Component({
@@ -19,19 +20,19 @@ import { AutoUnsubscribe } from './../../../core/decorators';
 })
 @AutoUnsubscribe('subscription')
 export class UserListComponent implements OnInit {
-  users$: Observable<Array<UserModel>>;
-  usersError$: Observable<Error | string>;
+  users$!: Observable<Array<UserModel>>;
+  usersError$!: Observable<Error | string | null>;
 
-  private subscription: Subscription;
-  private editedUser: UserModel;
-  private userService: EntityCollectionService<User>;
+  private subscription!: Subscription;
+  private editedUser!: UserModel | null;
+  private userService!: EntityCollectionService<UserModel>;
 
-  constructor(private store: Store, entitytServices: EntityServices) {
+  constructor(private store: Store<AppState>, entitytServices: EntityServices) {
     // получить сервис для entity User
     this.userService = entitytServices.getEntityCollectionService('User');
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     // использовать стандартный селектор
     this.users$ = this.userService.entities$;
 
@@ -43,17 +44,17 @@ export class UserListComponent implements OnInit {
 
     // listen editedUserID from UserFormComponent
     this.subscription = this.store.select(selectEditedUser).subscribe({
-      next: (user: UserModel) => {
-        this.editedUser = { ...user };
+      next: (user: UserModel | null) => {
+        this.editedUser = { ...user } as UserModel;
         console.log(
           `Last time you edited user ${JSON.stringify(this.editedUser)}`
         );
       },
-      error: err => console.log(err)
+      error: (err: any) => console.log(err)
     });
   }
 
-  onEditUser(user: UserModel) {
+  onEditUser(user: UserModel): void {
     const link = ['/users/edit', user.id];
     this.store.dispatch(
       RouterActions.go({
@@ -71,6 +72,6 @@ export class UserListComponent implements OnInit {
 
   onDeleteUser(user: UserModel) {
     // использовать сервис для генерации EntitytAction
-    this.userService.delete(user.id);
+    this.userService.delete(user.id!);
   }
 }

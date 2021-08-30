@@ -47,7 +47,7 @@ export const selectUsers = createSelector(
 export const selectEditedUser = createSelector(
   selectUsersEntitites,
   selectRouterState,
-  (users, router): UserModel => {
+  (users, router): UserModel | null => {
     const userID = router.state.params.editedUserID;
     if (userID && users) {
       return users[userID];
