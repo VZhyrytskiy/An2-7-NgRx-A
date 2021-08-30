@@ -36,7 +36,10 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
   ngOnInit(): void {
     this.sub = this.store
       .select(selectSelectedUserByUrl)
-      .subscribe((user: UserModel) => (this.user = { ...user }));
+      .subscribe((user: UserModel) => {
+        this.user = { ...user }
+        this.store.dispatch(UsersActions.setOriginalUser({ user }));
+      });
   }
 
   onSaveUser(): void {
