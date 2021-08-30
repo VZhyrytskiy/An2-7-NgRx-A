@@ -11,7 +11,7 @@ import { UserModel } from '../models/user.model';
   providedIn: 'any'
 })
 export class UsersStatePreloadingGuard implements CanActivate {
-  private userService: EntityCollectionService<User>;
+  private userService: EntityCollectionService<UserModel>;
 
   constructor(
     entitytServices: EntityServices

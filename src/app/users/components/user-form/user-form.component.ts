@@ -31,7 +31,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
   userForm!: NgForm;
 
   private sub!: Subscription;
-  private userService: EntityCollectionService<User>;
+  private userService: EntityCollectionService<UserModel>;
   private isSubmitClick = false;
 
   constructor(
