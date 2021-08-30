@@ -29,7 +29,7 @@ export class TaskListComponent implements OnInit {
     this.store.dispatch(TasksActions.getTasks());
   }
 
-  onCreateTask() {
+  onCreateTask(): void {
     this.store.dispatch(
       RouterActions.go({
         path: ['/add']

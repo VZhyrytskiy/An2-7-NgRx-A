@@ -3,6 +3,7 @@ import { MessagesService } from '../../../core';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
+import { AppState } from './../../../core/@ngrx';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 
 @Component({
@@ -15,7 +16,7 @@ export class MessagesComponent implements OnInit {
 
   constructor(
     public messagesService: MessagesService,
-    private store: Store
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {}

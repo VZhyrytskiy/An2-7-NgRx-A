@@ -3,6 +3,7 @@ import { NavigationExtras } from '@angular/router';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
+import { AppState } from './../../../core/@ngrx';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 
 import { Subject } from 'rxjs';
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     public authService: AuthService,
-    private store: Store
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
