@@ -5,13 +5,13 @@ import { EntityServices, EntityCollectionService } from '@ngrx/data';
 
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap, take, tap } from 'rxjs/operators';
-import { User } from '../models/user.model';
+import { UserModel } from '../models/user.model';
 
 @Injectable({
   providedIn: 'any'
 })
 export class UsersStatePreloadingGuard implements CanActivate {
-  private userService: EntityCollectionService<User>;
+  private userService: EntityCollectionService<UserModel>;
 
   constructor(
     entitytServices: EntityServices

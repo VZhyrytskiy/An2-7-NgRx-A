@@ -50,7 +50,7 @@ const reducer = createReducer(
     TasksActions.updateTaskSuccess,
     (state, { task }) => {
       console.log('UPDATE_TASK_SUCCESS action being handled!');
-      return adapter.updateOne({ id: task.id, changes: task }, state);
+      return adapter.updateOne({ id: task.id!, changes: task }, state);
     }
   ),
 
@@ -74,7 +74,7 @@ const reducer = createReducer(
 
   on(TasksActions.deleteTaskSuccess, (state, { task }) => {
     console.log('DELETE_TASK_SUCCESS action being handled!');
-    return adapter.removeOne(task.id, state);
+    return adapter.removeOne(task.id!, state);
   })
 );
 

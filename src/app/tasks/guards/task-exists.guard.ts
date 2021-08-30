@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 
 // ngrx
 import { Store } from '@ngrx/store';
-import { selectTasksData } from './../../core/@ngrx';
+import { AppState, selectTasksData } from './../../core/@ngrx';
 import * as RouterActions from './../../core/@ngrx/router/router.actions';
 
 // rxjs
@@ -17,12 +17,12 @@ import { TaskModel } from '../models/task.model';
   providedIn: 'root'
 })
 export class TaskExistsGuard implements CanActivate {
-  constructor(private store: Store) {}
+  constructor(private store: Store<AppState>) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
     return checkStore(this.store).pipe(
       switchMap(() => {
-        const id = +route.paramMap.get('taskID');
+        const id = +route.paramMap.get('taskID')!;
         return this.hasTask(id);
       })
     );
@@ -32,7 +32,7 @@ export class TaskExistsGuard implements CanActivate {
     return this.store.select(selectTasksData).pipe(
 
       // check if task with id exists
-      map((tasks: TaskModel[]) => !!tasks.find(task => task.id === id)),
+      map((tasks: readonly TaskModel[]) => !!tasks.find(task => task.id === id)),
 
       // make a side effect
       tap(result => {

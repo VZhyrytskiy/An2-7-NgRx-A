@@ -13,6 +13,7 @@ import {
 
 // @Ngrx
 import { Store } from '@ngrx/store';
+import { AppState } from './../@ngrx';
 import * as RouterActions from './../@ngrx/router/router.actions';
 
 import { Observable } from 'rxjs';
@@ -24,7 +25,7 @@ import { AuthService } from '../services/auth.service';
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(
     private authService: AuthService,
-    private store: Store
+    private store: Store<AppState>
   ) {}
 
   canActivate(
@@ -58,7 +59,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     console.log('CanLoad Guard is activated');
     const url = `/${route.path}`;
 
-    return this.checkLogin(url) as boolean;
+    return this.checkLogin(url);
   }
 
   private checkLogin(url: string): boolean | UrlTree {

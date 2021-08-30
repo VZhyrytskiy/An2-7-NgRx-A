@@ -6,31 +6,29 @@ import { Observable } from 'rxjs';
 // @ngrx
 import { TasksFacade } from './../../../core/@ngrx';
 
-import { Task, TaskModel } from './../../models/task.model';
+import { TaskModel } from './../../models/task.model';
 
 @Component({
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  tasks$: Observable<ReadonlyArray<Task>>;
-  tasksError$: Observable<Error | string>;
+  tasks$!: Observable<ReadonlyArray<TaskModel>>;
+  tasksError$!: Observable<Error | string | null>;
 
   constructor(private tasksFacade: TasksFacade) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.tasks$ = this.tasksFacade.tasks$;
     this.tasksError$ = this.tasksFacade.tasksError$;
   }
 
-  onCreateTask() {
+  onCreateTask(): void {
     this.tasksFacade.goTo({ path: ['/add'] });
   }
 
   onCompleteTask(task: TaskModel): void {
-    // task is not plain object
-    // taskToComplete is a plain object
-    const taskToComplete: Task = { ...task, done: true };
+    const taskToComplete: TaskModel = { ...task, done: true };
     this.tasksFacade.updateTask({ task: taskToComplete });
   }
 
@@ -39,8 +37,7 @@ export class TaskListComponent implements OnInit {
     this.tasksFacade.goTo({ path: link });
   }
 
-  onDeleteTask(task: TaskModel) {
-    const taskToDelete: Task = { ...task };
-    this.tasksFacade.deleteTask({ task: taskToDelete });
+  onDeleteTask(task: TaskModel): void {
+    this.tasksFacade.deleteTask({ task });
   }
 }

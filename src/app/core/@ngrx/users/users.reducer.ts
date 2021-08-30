@@ -2,7 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 import { UsersState, initialUsersState } from './users.state';
 import * as UsersActions from './users.actions';
-import { User } from './../../../users/models/user.model';
+import { UserModel } from './../../../users/models/user.model';
 
 const reducer = createReducer(
   initialUsersState,
@@ -17,10 +17,10 @@ const reducer = createReducer(
     const data = [...users];
 
     const entities = data.reduce(
-      (result: { [id: number]: User }, user: User) => {
+      (result: { [id: number]: UserModel }, user: UserModel) => {
         return {
           ...result,
-          [user.id]: user
+          [user.id!]: user
         };
       },
       {
@@ -52,7 +52,7 @@ const reducer = createReducer(
       const createdUpdatedUser = { ...user };
       const entities = {
         ...state.entities,
-        [createdUpdatedUser.id]: createdUpdatedUser
+        [createdUpdatedUser.id!]: createdUpdatedUser
       };
       const originalUser = { ...createdUpdatedUser };
 
@@ -77,7 +77,7 @@ const reducer = createReducer(
   ),
 
   on(UsersActions.deleteUserSuccess, (state, { user }) => {
-    const { [user.id]: removed, ...entities } = state.entities;
+    const { [user.id!]: removed, ...entities } = state.entities;
 
     return {
       ...state,

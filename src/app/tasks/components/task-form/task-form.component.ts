@@ -7,14 +7,14 @@ import { TasksFacade } from 'src/app/core/@ngrx/tasks/tasks.facade';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { TaskModel, Task } from './../../models/task.model';
+import { TaskModel } from './../../models/task.model';
 
 @Component({
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css']
 })
 export class TaskFormComponent implements OnInit, OnDestroy {
-  task: TaskModel;
+  task!: TaskModel;
 
   private componentDestroyed$: Subject<void> = new Subject<void>();
 
@@ -25,7 +25,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       next: (task: TaskModel) => {
         this.task = {...task};
       },
-      error(err) {
+      error(err: any) {
         console.log(err);
       },
       complete() {
@@ -45,8 +45,8 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     this.componentDestroyed$.complete();
   }
 
-  onSaveTask() {
-    const task = { ...this.task } as Task;
+  onSaveTask(): void {
+    const task = { ...this.task } as TaskModel;
 
     const method = task.id ? 'updateTask' : 'createTask';
     this.tasksFacade[method]({ task });
