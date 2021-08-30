@@ -26,7 +26,7 @@ import { UserModel } from './../../models/user.model';
 export class UserFormComponent implements OnInit, CanComponentDeactivate {
   user!: UserModel;
 
-  private sub: Subscription;
+  private sub!: Subscription;
 
   constructor(
     private dialogService: DialogService,
