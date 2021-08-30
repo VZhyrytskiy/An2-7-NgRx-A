@@ -74,4 +74,9 @@ export class UserListComponent implements OnInit {
     // использовать сервис для генерации EntitytAction
     this.userService.delete(user.id!);
   }
+
+  trackByFn(index: number, user: UserModel): number | null {
+    return user.id;
+  }
+
 }
