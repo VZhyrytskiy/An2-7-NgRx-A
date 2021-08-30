@@ -61,8 +61,9 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
         (Object.keys(originalUser!) as (keyof UserModel)[]).map(key => {
           if (originalUser![key] === this.user[key]) {
             flags.push(true);
+          } else {
+            flags.push(false);
           }
-          flags.push(false);
         });
 
         if (flags.every(el => el)) {
