@@ -3,6 +3,7 @@ import { MessagesService } from '../../../core';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
+import { AppState } from './../../../core/@ngrx';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 
 @Component({
@@ -15,22 +16,21 @@ export class MessagesComponent implements OnInit {
 
   constructor(
     public messagesService: MessagesService,
-    private store: Store
+    private store: Store<AppState>
   ) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
-  onClose() {
+  onClose(): void {
     this.store.dispatch(
       RouterActions.go({
         path: [{ outlets: { messages: null } }]
       })
     );
-
     this.messagesService.isDisplayed = false;
   }
 
-  onSend() {
+  onSend(): void {
     if (this.message) {
       this.messagesService.addMessage(this.message);
       this.message = '';

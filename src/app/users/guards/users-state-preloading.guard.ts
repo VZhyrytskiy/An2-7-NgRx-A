@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 
 import { Store } from '@ngrx/store';
-import { selectUsersLoaded } from './../../core/@ngrx';
+import { AppState, selectUsersLoaded } from './../../core/@ngrx';
 import * as UsersActions from './../../core/@ngrx/users/users.actions';
 
 import { Observable, of } from 'rxjs';
@@ -13,7 +13,7 @@ import { catchError, switchMap, take, tap } from 'rxjs/operators';
   providedIn: 'any'
 })
 export class UsersStatePreloadingGuard implements CanActivate {
-  constructor(private store: Store) {}
+  constructor(private store: Store<AppState>) {}
 
   canActivate(): Observable<boolean> {
     return this.checkStore().pipe(

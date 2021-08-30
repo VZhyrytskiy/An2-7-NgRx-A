@@ -7,7 +7,7 @@ import { switchMap } from 'rxjs/operators';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
-import { selectUsersOriginalUser, selectSelectedUserByUrl } from './../../../core/@ngrx';
+import { selectUsersOriginalUser, selectSelectedUserByUrl, AppState } from './../../../core/@ngrx';
 import * as UsersActions from './../../../core/@ngrx/users/users.actions';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 
@@ -16,7 +16,7 @@ import {
   DialogService,
   CanComponentDeactivate
 } from './../../../core';
-import { UserModel, User } from './../../models/user.model';
+import { UserModel } from './../../models/user.model';
 
 @Component({
   templateUrl: './user-form.component.html',
@@ -24,23 +24,26 @@ import { UserModel, User } from './../../models/user.model';
 })
 @AutoUnsubscribe()
 export class UserFormComponent implements OnInit, CanComponentDeactivate {
-  user: UserModel;
+  user!: UserModel;
 
-  private sub: Subscription;
+  private sub!: Subscription;
 
   constructor(
     private dialogService: DialogService,
-    private store: Store
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
     this.sub = this.store
       .select(selectSelectedUserByUrl)
-      .subscribe((user: UserModel) => (this.user = { ...user }));
+      .subscribe((user: UserModel) => {
+        this.user = { ...user }
+        this.store.dispatch(UsersActions.setOriginalUser({ user }));
+      });
   }
 
-  onSaveUser() {
-    const user = { ...this.user } as User;
+  onSaveUser(): void {
+    const user = { ...this.user };
 
     if (user.id) {
       this.store.dispatch(UsersActions.updateUser({ user }));
@@ -49,7 +52,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  onGoBack() {
+  onGoBack(): void {
     this.store.dispatch(RouterActions.back());
   }
 
@@ -58,17 +61,17 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const flags = [];
+    const flags: boolean[] = [];
 
     return this.store.select(selectUsersOriginalUser).pipe(
-      switchMap((originalUser: UserModel) => {
-        for (const key in originalUser) {
-          if (originalUser[key] === this.user[key]) {
+      switchMap((originalUser: UserModel | null) => {
+        (Object.keys(originalUser!) as (keyof UserModel)[]).map(key => {
+          if (originalUser![key] === this.user[key]) {
             flags.push(true);
           } else {
             flags.push(false);
           }
-        }
+        });
 
         if (flags.every(el => el)) {
           return of(true);

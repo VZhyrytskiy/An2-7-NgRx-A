@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import * as UsersActions from './../../../core/@ngrx/users/users.actions';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 import {
+  AppState,
   selectUsers,
   selectUsersError,
   selectEditedUser
@@ -13,7 +14,7 @@ import {
 // rxjs
 import { Observable, Subscription } from 'rxjs';
 
-import { UserModel, User } from './../../models/user.model';
+import { UserModel } from './../../models/user.model';
 import { AutoUnsubscribe } from './../../../core/decorators';
 
 @Component({
@@ -22,31 +23,31 @@ import { AutoUnsubscribe } from './../../../core/decorators';
 })
 @AutoUnsubscribe('subscription')
 export class UserListComponent implements OnInit {
-  users$: Observable<Array<UserModel>>;
-  usersError$: Observable<Error | string>;
+  users$!: Observable<Array<UserModel>>;
+  usersError$!: Observable<Error | string | null>;
 
-  private subscription: Subscription;
-  private editedUser: UserModel;
+  private subscription!: Subscription;
+  private editedUser!: UserModel | null;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store<AppState>) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.users$ = this.store.select(selectUsers);
     this.usersError$ = this.store.select(selectUsersError);
 
     // listen editedUserID from UserFormComponent
     this.subscription = this.store.select(selectEditedUser).subscribe({
-      next: (user: UserModel) => {
-        this.editedUser = { ...user };
+      next: (user: UserModel | null) => {
+        this.editedUser = { ...user } as UserModel;
         console.log(
           `Last time you edited user ${JSON.stringify(this.editedUser)}`
         );
       },
-      error: err => console.log(err)
+      error: (err: any) => console.log(err)
     });
   }
 
-  onEditUser(user: UserModel) {
+  onEditUser(user: UserModel): void {
     const link = ['/users/edit', user.id];
     this.store.dispatch(
       RouterActions.go({
@@ -62,8 +63,11 @@ export class UserListComponent implements OnInit {
     return false;
   }
 
-  onDeleteUser(user: UserModel) {
-    const userToDelete: User = { ...user };
-    this.store.dispatch(UsersActions.deleteUser({ user: userToDelete }));
+  onDeleteUser(user: UserModel): void {
+    this.store.dispatch(UsersActions.deleteUser({ user }));
+  }
+
+  trackByFn(index: number, user: UserModel): number | null {
+    return user.id;
   }
 }

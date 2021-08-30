@@ -1,23 +1,22 @@
 import { createEntityAdapter, EntityState, EntityAdapter } from '@ngrx/entity';
+import { TaskModel } from './../../../tasks/models/task.model';
 
-import { Task } from './../../../tasks/models/task.model';
-
-export interface TasksState extends EntityState<Task> {
+export interface TasksState extends EntityState<TaskModel> {
   readonly loading: boolean;
   readonly loaded: boolean;
-  readonly error: Error | string;
+  readonly error: Error | string | null;
 }
 
-function selectTaskId(task: Task): number {
+function selectTaskId(task: TaskModel): number {
   // In this case this would be optional since primary key is id
-  return task.id;
+  return task.id!;
 }
 
-function sortTasksByAction(task1: Task, task2: Task): number {
+function sortTasksByAction(task1: TaskModel, task2: TaskModel): number {
   return task1.action.localeCompare(task2.action);
 }
 
-export const adapter: EntityAdapter<Task> = createEntityAdapter<Task>({
+export const adapter: EntityAdapter<TaskModel> = createEntityAdapter<TaskModel>({
   selectId: selectTaskId,
   sortComparer: sortTasksByAction
 });

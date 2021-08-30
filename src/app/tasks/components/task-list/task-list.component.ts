@@ -2,33 +2,32 @@ import { Component, OnInit } from '@angular/core';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
-import { selectTasksData, selectTasksError, selectTasksDataPartial } from './../../../core/@ngrx';
+import { AppState, selectTasksData, selectTasksError } from './../../../core/@ngrx';
 import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 
 // rxjs
 import { Observable } from 'rxjs';
 
-import { Task, TaskModel } from './../../models/task.model';
+import { TaskModel } from './../../models/task.model';
 
 @Component({
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  tasks$: Observable<ReadonlyArray<Task>>;
-  tasksError$: Observable<Error | string>;
+  tasks$!: Observable<ReadonlyArray<TaskModel>>;
+  tasksError$!: Observable<Error | string | null>;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store<AppState>) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     console.log('We have a store! ', this.store);
     this.tasks$ = this.store.select(selectTasksData);
-    // this.tasks$ = this.store.select(selectTasksDataPartial, { count: 2});
     this.tasksError$ = this.store.select(selectTasksError);
   }
 
-  onCreateTask() {
+  onCreateTask(): void {
     this.store.dispatch(
       RouterActions.go({
         path: ['/add']
@@ -37,9 +36,7 @@ export class TaskListComponent implements OnInit {
   }
 
   onCompleteTask(task: TaskModel): void {
-    // task is not plain object
-    // taskToComplete is a plain object
-    const taskToComplete: Task = { ...task, done: true };
+    const taskToComplete: TaskModel = { ...task, done: true };
     this.store.dispatch(TasksActions.completeTask({ task: taskToComplete }));
   }
 
@@ -52,8 +49,7 @@ export class TaskListComponent implements OnInit {
     );
   }
 
-  onDeleteTask(task: TaskModel) {
-    const taskToDelete: Task = { ...task };
-    this.store.dispatch(TasksActions.deleteTask({ task: taskToDelete }));
+  onDeleteTask(task: TaskModel): void {
+    this.store.dispatch(TasksActions.deleteTask({ task }));
   }
 }

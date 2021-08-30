@@ -15,10 +15,10 @@ import * as RouterActions from './../router/router.actions';
 
 // rxjs
 import { Observable } from 'rxjs';
-import { concatMap, pluck, switchMap, takeUntil, tap, map } from 'rxjs/operators';
+import { concatMap, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../../tasks/services';
-import { TaskModel, Task } from '../../../tasks/models/task.model';
+import { TaskModel } from '../../../tasks/models/task.model';
 
 @Injectable()
 export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
@@ -41,7 +41,7 @@ export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
         //      .getTasks()
         //      .pipe(takeUntil(this.actions$.pipe(ofType(TasksActions.TaskListComponentIsDestroyed))
         // If you use HttpClient, the stream is finite,
-        // so you have no needs to unsibscribe
+        // so you have no needs to unsubscribe
         this.taskPromiseService
           .getTasks()
           .then(tasks => TasksActions.getTasksSuccess({ tasks }))
@@ -53,11 +53,11 @@ export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
   updateTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(TasksActions.updateTask, TasksActions.completeTask),
-      pluck('task'),
+      map(action => action.task),
       concatMap((task: TaskModel) =>
         this.taskPromiseService
           .updateTask(task)
-          .then((updatedTask: Task) => {
+          .then((updatedTask: TaskModel) => {
             return TasksActions.updateTaskSuccess({ task: updatedTask });
           })
           .catch(error => TasksActions.updateTaskError({ error }))
@@ -68,11 +68,11 @@ export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
   createTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(TasksActions.createTask),
-      pluck('task'),
+      map(action => action.task),
       concatMap((task: TaskModel) =>
         this.taskPromiseService
           .createTask(task)
-          .then((createdTask: Task) => {
+          .then((createdTask: TaskModel) => {
             return TasksActions.createTaskSuccess({ task: createdTask });
           })
           .catch(error => TasksActions.createTaskError({ error }))
@@ -83,7 +83,7 @@ export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
   deleteTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(TasksActions.deleteTask),
-      pluck('task'),
+      map(action => action.task),
       concatMap((task: TaskModel) =>
         this.taskPromiseService
           .deleteTask(task)
@@ -120,7 +120,7 @@ export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
   // of the resolved effects.
   // ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {
   //   return resolvedEffects$.pipe(
-  //     // tap(val => console.log('ngrxOnRunEffects:', val)),
+  //     tap(val => console.log('ngrxOnRunEffects:', val)),
   //     // perform until create new task
   //     // only for demo purpose
   //     takeUntil(this.actions$.pipe(ofType(TasksActions.createTask)))
