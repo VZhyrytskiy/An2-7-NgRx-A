@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 // @ngrx
 import { Store } from '@ngrx/store';
+import { AppState } from '../app.state';
 import {
   selectTasksData,
   selectTasksError,
@@ -13,32 +14,32 @@ import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 // rxjs
 import { Observable } from 'rxjs';
 
-import { Task, TaskModel } from 'src/app/tasks/models/task.model';
+import { TaskModel } from 'src/app/tasks/models/task.model';
 import { NavigationExtras } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TasksFacade {
-  tasks$: Observable<ReadonlyArray<Task>>;
-  tasksError$: Observable<Error | string>;
+  tasks$: Observable<ReadonlyArray<TaskModel>>;
+  tasksError$: Observable<Error | string | null>;
   selectedTaskByUrl$: Observable<TaskModel>;
 
-  constructor(private store: Store) {
+  constructor(private store: Store<AppState>) {
     this.tasks$ = this.store.select(selectTasksData);
     this.tasksError$ = this.store.select(selectTasksError);
     this.selectedTaskByUrl$ = this.store.select(selectSelectedTaskByUrl);
   }
 
-  createTask(props: { task: Task }) {
+  createTask(props: { task: TaskModel }) {
     this.store.dispatch(TasksActions.createTask(props));
   }
 
-  updateTask(props: { task: Task }) {
+  updateTask(props: { task: TaskModel }) {
     this.store.dispatch(TasksActions.updateTask(props));
   }
 
-  deleteTask(props: { task: Task }) {
+  deleteTask(props: { task: TaskModel }) {
     this.store.dispatch(TasksActions.deleteTask(props));
   }
 
