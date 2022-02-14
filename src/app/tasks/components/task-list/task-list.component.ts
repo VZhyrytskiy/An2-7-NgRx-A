@@ -1,17 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
-// @Ngrx
 import { Store } from '@ngrx/store';
-import { AppState, TasksState } from './../../../core/@ngrx';
-import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
-
-// rxjs
-import { Observable } from 'rxjs';
-
-import { TaskModel } from './../../models/task.model';
 import { TaskPromiseService } from './../../services';
+import { tasksFeatureKey } from './../../../core/@ngrx';
 
+import type { Observable } from 'rxjs';
+import type { AppState, TasksState } from './../../../core/@ngrx';
+import type { OnInit } from '@angular/core';
+import type { TaskModel } from './../../models/task.model';
+import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 @Component({
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css']
@@ -28,7 +25,7 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('We have a store! ', this.store);
-    this.tasksState$ = this.store.select('tasks');
+    this.tasksState$ = this.store.select(tasksFeatureKey);
   }
 
   onCreateTask() {
