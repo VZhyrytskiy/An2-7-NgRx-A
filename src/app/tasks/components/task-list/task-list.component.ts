@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 // @Ngrx
 import { Store } from '@ngrx/store';
-import { AppState } from './../../../core/@ngrx';
+import type { AppState } from './../../../core/@ngrx';
 
-import { TaskModel } from './../../models/task.model';
 import { TaskPromiseService } from './../../services';
+import type { OnInit } from '@angular/core';
+import type { TaskModel } from './../../models/task.model';
 
 @Component({
   templateUrl: './task-list.component.html',
