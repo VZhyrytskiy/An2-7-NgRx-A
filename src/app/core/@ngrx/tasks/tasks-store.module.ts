@@ -4,9 +4,10 @@ import { CommonModule } from '@angular/common';
 // @NgRx
 import { StoreModule } from '@ngrx/store';
 import { tasksReducer } from './tasks.reducer';
+import { tasksFeatureKey } from '../app.state';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, StoreModule.forFeature('tasks', tasksReducer)]
+  imports: [CommonModule, StoreModule.forFeature(tasksFeatureKey, tasksReducer)]
 })
 export class TasksStoreModule {}
