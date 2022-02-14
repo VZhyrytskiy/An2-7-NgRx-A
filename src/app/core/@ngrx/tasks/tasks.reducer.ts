@@ -1,6 +1,8 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
+import { initialTasksState } from './tasks.state';
 
-import { TasksState, initialTasksState } from './tasks.state';
+import type { Action } from '@ngrx/store';
+import type { TasksState } from './tasks.state';
 import * as TasksActions from './tasks.actions';
 
 const reducer = createReducer(
