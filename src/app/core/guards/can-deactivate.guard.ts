@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CanDeactivate, UrlTree } from '@angular/router';
+import type { CanDeactivate, UrlTree } from '@angular/router';
+import type { Observable } from 'rxjs';
 
-import { Observable } from 'rxjs';
-
-import { CanComponentDeactivate } from './../interfaces/can-component-deactivate.interface';
+import type { CanComponentDeactivate } from './../interfaces/can-component-deactivate.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +17,6 @@ export class CanDeactivateGuard
     | boolean
     | UrlTree {
     console.log('CanDeactivate Guard is called');
-    return component.canDeactivate ? component.canDeactivate() : true;
+    return component.canDeactivate?.() ?? true;
   }
 }

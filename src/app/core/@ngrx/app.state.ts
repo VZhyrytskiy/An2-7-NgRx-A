@@ -1,5 +1,7 @@
-import { TasksState } from './tasks';
+import type { TasksState } from './tasks';
 
+export const tasksFeatureKey = 'tasks';
 export interface AppState {
-  tasks: TasksState;
+  [tasksFeatureKey]: TasksState;
 }
+
