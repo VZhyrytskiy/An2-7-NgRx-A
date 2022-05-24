@@ -1,7 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { initialTasksState } from './tasks.state';
-import type { TaskModel } from './../../../tasks/models/task.model';
 import * as TasksActions from './tasks.actions';
 
 export const tasksReducer = createReducer(
