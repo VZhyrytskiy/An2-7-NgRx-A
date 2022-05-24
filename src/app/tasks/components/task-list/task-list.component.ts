@@ -6,6 +6,7 @@ import { type Observable } from 'rxjs';
 import { TaskPromiseService } from './../../services';
 import type { TaskModel } from './../../models/task.model';
 import { type TasksState, type AppState, tasksFeatureKey} from './../../../core/@ngrx';
+import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 
 @Component({
   templateUrl: './task-list.component.html',
