@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 
 import { TaskModel } from './../../models/task.model';
-import { TaskPromiseService } from './../../services';
 import { tasksFeatureKey, type AppState, type TasksState } from './../../../core/@ngrx';
 import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 
