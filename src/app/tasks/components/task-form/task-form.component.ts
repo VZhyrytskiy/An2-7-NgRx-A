@@ -1,16 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-
-// @NgRx
+import { Component, type OnInit, type OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router, type ParamMap } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState, selectTasksState, TasksState } from './../../../core/@ngrx';
-import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
-
-// rxjs
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, takeUntil } from 'rxjs';
 
 import { TaskModel } from './../../models/task.model';
+import { selectTasksState, type TasksState } from './../../../core/@ngrx';
+import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 
 @Component({
   templateUrl: './task-form.component.html',
@@ -24,7 +19,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private store: Store<AppState>
+    private store: Store
   ) {}
 
   ngOnInit(): void {

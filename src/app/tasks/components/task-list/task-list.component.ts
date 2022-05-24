@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-// @Ngrx
 import { Store } from '@ngrx/store';
-import { AppState, TasksState, selectTasksState } from './../../../core/@ngrx';
+import { type Observable } from 'rxjs';
+
+import { type TaskModel } from './../../models/task.model';
+import { type TasksState, selectTasksState } from './../../../core/@ngrx';
 import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
-
-// rxjs
-import { Observable } from 'rxjs';
-
-import { TaskModel } from './../../models/task.model';
 
 @Component({
   templateUrl: './task-list.component.html',
@@ -18,7 +14,7 @@ import { TaskModel } from './../../models/task.model';
 export class TaskListComponent implements OnInit {
   tasksState$!: Observable<TasksState>;
 
-  constructor(private router: Router, private store: Store<AppState>) {}
+  constructor(private router: Router, private store: Store) {}
 
   ngOnInit(): void {
     console.log('We have a store! ', this.store);
