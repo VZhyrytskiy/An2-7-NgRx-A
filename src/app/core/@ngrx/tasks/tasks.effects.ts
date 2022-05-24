@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect } from '@ngrx/effects';
+import { type Actions, createEffect } from '@ngrx/effects';
 
 
 
