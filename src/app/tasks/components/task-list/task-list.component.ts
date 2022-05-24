@@ -1,14 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { TaskPromiseService } from './../../services';
-import { tasksFeatureKey } from './../../../core/@ngrx';
+import { type Observable } from 'rxjs';
 
-import type { Observable } from 'rxjs';
-import type { AppState, TasksState } from './../../../core/@ngrx';
-import type { OnInit } from '@angular/core';
+import { TaskPromiseService } from './../../services';
 import type { TaskModel } from './../../models/task.model';
-import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
+import { type TasksState, type AppState, tasksFeatureKey} from './../../../core/@ngrx';
+
 @Component({
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css']
