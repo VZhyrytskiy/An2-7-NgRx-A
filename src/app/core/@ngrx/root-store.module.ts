@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-// @Ngrx
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule, RouterState } from '@ngrx/router-store';
+
 import { TasksStoreModule } from './tasks/tasks-store.module';
 import { metaReducers } from './meta-reducers';
 import { routerReducers, CustomSerializer } from './router';
@@ -39,7 +38,10 @@ import { environment } from './../../../environments/environment';
     }),
     // Instrumentation must be imported after importing StoreModule (config is optional)
     TasksStoreModule,
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    !environment.production ? StoreDevtoolsModule.instrument({
+      maxAge: 25,       // Retains last 25 states
+      autoPause: true   // Pauses recording actions and state changes when the extension window is not open
+    }) : []
   ]
 })
 export class RootStoreModule { }
