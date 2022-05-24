@@ -29,7 +29,10 @@ import { environment } from './../../../environments/environment';
     ),
     // Instrumentation must be imported after importing StoreModule (config is optional)
     TasksStoreModule,
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    !environment.production ? StoreDevtoolsModule.instrument({
+      maxAge: 25,       // Retains last 25 states
+      autoPause: true   // Pauses recording actions and state changes when the extension window is not open
+    }) : []
   ]
 })
 export class RootStoreModule {}
