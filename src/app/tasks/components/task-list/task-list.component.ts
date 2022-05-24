@@ -1,9 +1,11 @@
 import { Component, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { type Observable } from 'rxjs';
 
 import { TaskPromiseService } from './../../services';
 import type { TaskModel } from './../../models/task.model';
+import { type TasksState, type AppState, tasksFeatureKey} from './../../../core/@ngrx';
 
 @Component({
   templateUrl: './task-list.component.html',
@@ -16,7 +18,7 @@ export class TaskListComponent implements OnInit {
   constructor(
     private router: Router,
     private taskPromiseService: TaskPromiseService,
-    private store: Store
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
