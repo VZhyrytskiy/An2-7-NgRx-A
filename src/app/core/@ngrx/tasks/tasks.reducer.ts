@@ -1,12 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
-import { initialTasksState } from './tasks.state';
 
-import type { Action } from '@ngrx/store';
-import type { TasksState } from './tasks.state';
+import { initialTasksState } from './tasks.state';
 import type { TaskModel } from './../../../tasks/models/task.model';
 import * as TasksActions from './tasks.actions';
 
-const reducer = createReducer(
+export const tasksReducer = createReducer(
   initialTasksState,
   on(TasksActions.getTasks, state => {
     console.log('GET_TASKS action being handled!');
@@ -46,9 +44,3 @@ const reducer = createReducer(
     };
   })
 );
-
-// Must wrap the constant in a function as AOT compiler does not currently
-// support function expressions
-export function tasksReducer(state: TasksState | undefined, action: Action) {
-  return reducer(state, action);
-}
