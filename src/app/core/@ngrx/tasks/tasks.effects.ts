@@ -1,24 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
-// @NgRx
-import { Action } from '@ngrx/store';
-import {
-  Actions,
-  createEffect,
-  ofType,
-  OnInitEffects,
-  OnRunEffects,
-  EffectNotification
-} from '@ngrx/effects';
-import * as TasksActions from './tasks.actions';
-
-// rxjs
-import { Observable } from 'rxjs';
-import { concatMap, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Actions, createEffect, ofType, type OnInitEffects, type OnRunEffects, type EffectNotification } from '@ngrx/effects';
+import { type Action } from '@ngrx/store';
+import { type Observable, concatMap, map, switchMap, takeUntil, tap } from 'rxjs';
 
 import { TaskPromiseService } from './../../../tasks/services';
-import { TaskModel } from '../../../tasks/models/task.model';
+import { type TaskModel } from '../../../tasks/models/task.model';
+import * as TasksActions from './tasks.actions';
 
 @Injectable()
 export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
