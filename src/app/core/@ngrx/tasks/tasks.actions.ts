@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { TaskModel } from './../../../tasks/models/task.model';
+import type { TaskModel } from './../../../tasks/models/task.model';
 
 export const getTasks = createAction('[Task List Page (App)] GET_TASKS');
 
