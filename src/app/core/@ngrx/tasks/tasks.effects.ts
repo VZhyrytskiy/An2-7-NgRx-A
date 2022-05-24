@@ -1,15 +1,10 @@
 import { Injectable } from '@angular/core';
-
-// @NgRx
-import { Action } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import * as TasksActions from './tasks.actions';
-
-// rxjs
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { type Action } from '@ngrx/store';
+import { type Observable, map, switchMap } from 'rxjs';
 
 import { TaskPromiseService } from './../../../tasks/services';
+import * as TasksActions from './tasks.actions';
 
 @Injectable()
 export class TasksEffects {
