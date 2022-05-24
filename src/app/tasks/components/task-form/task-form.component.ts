@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-
-// rxjs
-import { map, switchMap } from 'rxjs/operators';
+import { Component, type OnInit } from '@angular/core';
+import { ActivatedRoute, Router, type ParamMap } from '@angular/router';
+import { map, switchMap } from 'rxjs';
 
 import { TaskModel } from './../../models/task.model';
 import { TaskPromiseService } from './../../services';

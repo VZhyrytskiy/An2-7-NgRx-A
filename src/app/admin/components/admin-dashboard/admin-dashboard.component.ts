@@ -1,9 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, type OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-// rxjs
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { type Observable, map } from 'rxjs';
 
 @Component({
   templateUrl: 'admin-dashboard.component.html',
