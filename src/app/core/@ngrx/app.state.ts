@@ -1,7 +1,9 @@
-import { TasksState } from './tasks';
-import { UsersState } from './users';
+import type { TasksState } from './tasks';
+import type { UsersState } from './users';
 
+export const tasksFeatureKey = 'tasks';
+export const usersFeatureKey = 'users';
 export interface AppState {
-  tasks: TasksState;
-  users: UsersState;
+  [tasksFeatureKey]: TasksState;
+  [usersFeatureKey]: UsersState;
 }

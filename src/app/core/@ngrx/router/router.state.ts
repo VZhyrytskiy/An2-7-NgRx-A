@@ -1,5 +1,5 @@
-import { Params, Data } from '@angular/router';
-import { RouterReducerState } from '@ngrx/router-store';
+import type { Params, Data } from '@angular/router';
+import type { RouterReducerState } from '@ngrx/router-store';
 
 export interface RouterStateUrl {
   url: string;

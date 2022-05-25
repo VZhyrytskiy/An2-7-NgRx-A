@@ -1,17 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
-// @NgRx
-import { Action } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import * as UsersActions from './users.actions';
-
-// Rxjs
-import { Observable, of } from 'rxjs';
-import { switchMap, map, catchError, concatMap } from 'rxjs/operators';
+import { type Action } from '@ngrx/store';
+import { type Observable, of, switchMap, map, catchError, concatMap } from 'rxjs';
 
 import { UserObservableService } from './../../../users/services';
-import { UserModel } from '../../../users/models/user.model';
+import { type UserModel } from '../../../users/models/user.model';
+import * as UsersActions from './users.actions';
 
 @Injectable()
 export class UsersEffects {

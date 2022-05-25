@@ -1,18 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, UrlTree } from '@angular/router';
+import { Component, type OnInit  } from '@angular/core';
+import { ActivatedRoute, type Data, type UrlTree } from '@angular/router';
 import { Location } from '@angular/common';
-
-// rxjs
-import { Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-
-// @Ngrx
 import { Store } from '@ngrx/store';
-import { AppState, selectUsersOriginalUser } from './../../../core/@ngrx';
-import * as UsersActions from './../../../core/@ngrx/users/users.actions';
+import { type Observable, map, of, switchMap } from 'rxjs';
 
-import { DialogService, CanComponentDeactivate } from './../../../core';
-import { UserModel } from './../../models/user.model';
+import { selectUsersOriginalUser } from './../../../core/@ngrx';
+import { DialogService, type CanComponentDeactivate } from './../../../core';
+import { type UserModel } from './../../models/user.model';
+import * as UsersActions from './../../../core/@ngrx/users/users.actions';
 
 @Component({
   templateUrl: './user-form.component.html',
@@ -25,13 +20,13 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
     private route: ActivatedRoute,
     private location: Location,
     private dialogService: DialogService,
-    private store: Store<AppState>
+    private store: Store
   ) {}
 
   ngOnInit(): void {
     // data is an observable object
     // which contains custom and resolve data
-    this.route.data.pipe(map(data => data.user)).subscribe((user: UserModel) => {
+    this.route.data.pipe(map((data: Data) => data['user'])).subscribe((user: UserModel) => {
       this.user = { ...user };
     });
   }

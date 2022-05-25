@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { MetaDefinition } from '@angular/platform-browser';
+import { type MetaDefinition } from '@angular/platform-browser';
+import { type Routes, RouterModule } from '@angular/router';
 
 import { TaskListComponent, TaskFormComponent } from './components';
 
