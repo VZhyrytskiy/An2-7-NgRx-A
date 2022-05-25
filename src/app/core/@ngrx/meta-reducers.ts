@@ -1,4 +1,4 @@
-import { ActionReducer, MetaReducer } from '@ngrx/store';
+import type { ActionReducer, MetaReducer } from '@ngrx/store';
 import { environment } from 'src/environments/environment';
 
 // console.log all actions and state

@@ -1,22 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { UrlTree } from '@angular/router';
-
-// rxjs
-import { Observable, of, Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-
-// @Ngrx
+import { Component, type OnInit  } from '@angular/core';
+import { type Data, type UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectUsersOriginalUser, selectSelectedUserByUrl, AppState } from './../../../core/@ngrx';
+import { type Observable, type Subscription, map, of, switchMap } from 'rxjs';
+
+import { selectUsersOriginalUser, selectSelectedUserByUrl } from './../../../core/@ngrx';
+import { AutoUnsubscribe, DialogService, type CanComponentDeactivate } from './../../../core';
+import { type UserModel } from './../../models/user.model';
 import * as UsersActions from './../../../core/@ngrx/users/users.actions';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
-
-import {
-  AutoUnsubscribe,
-  DialogService,
-  CanComponentDeactivate
-} from './../../../core';
-import { UserModel } from './../../models/user.model';
 
 @Component({
   templateUrl: './user-form.component.html',
@@ -30,12 +21,11 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
 
   constructor(
     private dialogService: DialogService,
-    private store: Store<AppState>
+    private store: Store
   ) {}
 
   ngOnInit(): void {
-    this.sub = this.store
-      .select(selectSelectedUserByUrl)
+    this.sub = this.store.select(selectSelectedUserByUrl)
       .subscribe((user: UserModel) => {
         this.user = { ...user }
         this.store.dispatch(UsersActions.setOriginalUser({ user }));
