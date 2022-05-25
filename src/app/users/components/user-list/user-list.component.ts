@@ -1,18 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-
-// @NgRx
+import { Component, type OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { EntityServices, EntityCollectionService } from '@ngrx/data';
-import * as RouterActions from './../../../core/@ngrx/router/router.actions';
-import { selectEditedUser } from './../../../core/@ngrx/data/entity-store.module';
-import { AppState } from './../../../core/@ngrx';
+import { type Observable, type Subscription, map } from 'rxjs';
 
-// rxjs
-import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
-
-import { UserModel } from './../../models/user.model';
+import { selectEditedUser } from './../../../core/@ngrx';
 import { AutoUnsubscribe } from './../../../core/decorators';
+import { type UserModel } from './../../models/user.model';
+import * as RouterActions from './../../../core/@ngrx/router/router.actions';
+
+
 
 @Component({
   templateUrl: './user-list.component.html',
@@ -27,8 +23,11 @@ export class UserListComponent implements OnInit {
   private editedUser!: UserModel | null;
   private userService!: EntityCollectionService<UserModel>;
 
-  constructor(private store: Store<AppState>, entitytServices: EntityServices) {
-    // получить сервис для entity User
+  constructor(
+    private store: Store,
+    entitytServices: EntityServices
+  ) {
+    // get service for the entity User
     this.userService = entitytServices.getEntityCollectionService('User');
   }
 
@@ -39,7 +38,7 @@ export class UserListComponent implements OnInit {
     // использовать стандартный селектор с преобразованием
     // ошибка храниться в EntityAction
     this.usersError$ = this.userService.errors$.pipe(
-      map(action => action.payload.data.error.error.message)
+      map(action => action.payload.error!)
     );
 
     // listen editedUserID from UserFormComponent

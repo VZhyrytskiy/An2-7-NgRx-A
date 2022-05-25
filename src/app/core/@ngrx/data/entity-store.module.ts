@@ -1,12 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import {
-  EntityMetadataMap,
-  EntityDataModule,
-  DefaultDataServiceConfig
-} from '@ngrx/data';
+import { EntityDataModule, DefaultDataServiceConfig, type EntityMetadataMap } from '@ngrx/data';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+
 import { selectRouterState } from '../router/router.selectors';
 import { UserModel } from 'src/app/users/models/user.model';
 
@@ -42,7 +38,7 @@ export const selectEditedUser = createSelector(
   selectUsersEntitites,
   selectRouterState,
   (users, router): UserModel | null => {
-    const userID = router.state.params.editedUserID;
+    const userID = router.state.params['editedUserID'];
     if (userID && users) {
       return users[userID];
     } else {
@@ -56,7 +52,7 @@ export const selectSelectedUserByUrl = createSelector(
   selectUsersEntitites,
   selectRouterState,
   (users, router): UserModel => {
-    const userID = router.state.params.userID;
+    const userID = router.state.params['userID'];
     if (userID && users) {
       return users[userID];
     } else {

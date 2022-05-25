@@ -1,23 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { UrlTree } from '@angular/router';
-
-// rxjs
-import { Observable, Subscription } from 'rxjs';
-
-// @Ngrx
+import { Component, type OnInit, ViewChild  } from '@angular/core';
+import { EntityCollectionService, EntityServices } from '@ngrx/data';
 import { Store } from '@ngrx/store';
-import { AppState } from './../../../core/@ngrx';
+import { NgForm } from '@angular/forms';
+import { type UrlTree } from '@angular/router';
+import { type Observable, type Subscription } from 'rxjs';
+
+import { AutoUnsubscribe, DialogService, type CanComponentDeactivate } from './../../../core';
+import { type UserModel } from './../../models/user.model';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 import { selectSelectedUserByUrl } from 'src/app/core/@ngrx/data/entity-store.module';
-
-import {
-  AutoUnsubscribe,
-  DialogService,
-  CanComponentDeactivate
-} from './../../../core';
-import { UserModel } from './../../models/user.model';
-import { EntityCollectionService, EntityServices } from '@ngrx/data';
-import { NgForm } from '@angular/forms';
 
 @Component({
   templateUrl: './user-form.component.html',
@@ -31,21 +22,20 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
   userForm!: NgForm;
 
   private sub!: Subscription;
-  private userService: EntityCollectionService<UserModel>;
+  private userService!: EntityCollectionService<UserModel>;
   private isSubmitClick = false;
 
   constructor(
     private dialogService: DialogService,
-    private store: Store<AppState>,
+    private store: Store,
     entitytServices: EntityServices
   ) {
-    // получить сервис для entity User
+    // get service for the entity User
     this.userService = entitytServices.getEntityCollectionService('User');
   }
 
   ngOnInit(): void {
-    this.sub = this.store
-      .select(selectSelectedUserByUrl)
+    this.sub = this.store.select(selectSelectedUserByUrl)
       .subscribe((user: UserModel) => {
         this.user = { ...user }
       });
