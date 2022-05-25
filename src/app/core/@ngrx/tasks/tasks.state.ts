@@ -1,6 +1,5 @@
-import { createEntityAdapter, EntityState, EntityAdapter } from '@ngrx/entity';
-import { TaskModel } from './../../../tasks/models/task.model';
-
+import { createEntityAdapter, type EntityState, type EntityAdapter } from '@ngrx/entity';
+import { type TaskModel } from './../../../tasks/models/task.model';
 export interface TasksState extends EntityState<TaskModel> {
   readonly loading: boolean;
   readonly loaded: boolean;

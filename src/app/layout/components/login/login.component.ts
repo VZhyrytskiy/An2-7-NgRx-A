@@ -1,15 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavigationExtras } from '@angular/router';
-
-// @Ngrx
+import { Component, type OnInit, type OnDestroy } from '@angular/core';
+import { type NavigationExtras } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState } from './../../../core/@ngrx';
-import * as RouterActions from './../../../core/@ngrx/router/router.actions';
-
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { AuthService } from './../../../core';
+import * as RouterActions from './../../../core/@ngrx/router/router.actions';
+
 
 @Component({
   templateUrl: './login.component.html',
@@ -22,7 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     public authService: AuthService,
-    private store: Store<AppState>
+    private store: Store
   ) {}
 
   ngOnInit(): void {

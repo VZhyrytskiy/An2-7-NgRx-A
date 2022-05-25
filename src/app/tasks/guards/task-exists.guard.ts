@@ -1,23 +1,18 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
-
-// ngrx
 import { Store } from '@ngrx/store';
-import { AppState, selectTasksData } from './../../core/@ngrx';
-import * as RouterActions from './../../core/@ngrx/router/router.actions';
+import type { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
+import { type Observable, map, switchMap, take, tap } from 'rxjs';
 
-// rxjs
-import { Observable } from 'rxjs';
-import { map, switchMap, take, tap } from 'rxjs/operators';
-
+import { selectTasksData } from './../../core/@ngrx';
 import { checkStore } from './check-store.function';
-import { TaskModel } from '../models/task.model';
+import { type TaskModel } from '../models/task.model';
+import * as RouterActions from './../../core/@ngrx/router/router.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskExistsGuard implements CanActivate {
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
     return checkStore(this.store).pipe(

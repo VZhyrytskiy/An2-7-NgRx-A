@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
-
-// ngrx
 import { Store } from '@ngrx/store';
-import { AppState } from './../../core/@ngrx';
-
-// rxjs
-import { Observable, of } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { type CanActivate } from '@angular/router';
+import { type Observable, of, catchError } from 'rxjs';
 
 import { checkStore } from './check-store.function';
 
@@ -15,11 +9,10 @@ import { checkStore } from './check-store.function';
   providedIn: 'root'
 })
 export class TasksStatePreloadingGuard implements CanActivate {
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store) {}
 
   canActivate(): Observable<boolean> {
     return checkStore(this.store).pipe(
-      switchMap(() => of(true)),
       catchError(() => of(false))
     );
   }
