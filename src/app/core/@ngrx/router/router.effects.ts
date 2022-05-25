@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { Actions, createEffect, EffectConfig, ofType } from '@ngrx/effects';
+import { tap } from 'rxjs';
 
-import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as RouterActions from './router.actions';
 
-import { tap } from 'rxjs/operators';
-
+const effectConfig: EffectConfig = {
+  dispatch: false
+};
 @Injectable()
 export class RouterEffects {
   constructor(
@@ -24,7 +26,7 @@ export class RouterEffects {
           this.router.navigate(path, { queryParams, ...extras });
         })
       ),
-    { dispatch: false }
+      effectConfig
   );
 
   navigateBack$ = createEffect(
@@ -33,7 +35,7 @@ export class RouterEffects {
         ofType(RouterActions.back),
         tap(() => this.location.back())
       ),
-    { dispatch: false }
+      effectConfig
   );
 
   navigateForward$ = createEffect(
@@ -42,6 +44,6 @@ export class RouterEffects {
         ofType(RouterActions.forward),
         tap(() => this.location.forward())
       ),
-    { dispatch: false }
+      effectConfig
   );
 }

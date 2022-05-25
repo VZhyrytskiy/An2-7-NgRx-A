@@ -1,21 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-
-// @NgRx
+import { Component, type OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { type Observable, type Subscription } from 'rxjs';
+
+import { selectUsers, selectUsersError, selectEditedUser } from './../../../core/@ngrx';
+import { AutoUnsubscribe } from './../../../core/decorators';
+import { type UserModel } from './../../models/user.model';
 import * as UsersActions from './../../../core/@ngrx/users/users.actions';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
-import {
-  AppState,
-  selectUsers,
-  selectUsersError,
-  selectEditedUser
-} from './../../../core/@ngrx';
-
-// rxjs
-import { Observable, Subscription } from 'rxjs';
-
-import { UserModel } from './../../models/user.model';
-import { AutoUnsubscribe } from './../../../core/decorators';
 
 @Component({
   templateUrl: './user-list.component.html',
@@ -29,7 +20,9 @@ export class UserListComponent implements OnInit {
   private subscription!: Subscription;
   private editedUser!: UserModel | null;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
     this.users$ = this.store.select(selectUsers);

@@ -1,25 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
-
-// rxjs
-import { EMPTY, Observable, of } from 'rxjs';
-import { delay, catchError, finalize, tap, take, switchMap } from 'rxjs/operators';
-
-// NgRx
 import { Store } from '@ngrx/store';
-import { AppState, selectSelectedUserByUrl } from './../../core/@ngrx';
+import { type Resolve } from '@angular/router';
+import { type Observable, of, EMPTY, catchError, take, switchMap, delay, finalize, tap } from 'rxjs';
+
+import { selectSelectedUserByUrl } from './../../core/@ngrx';
+import { SpinnerService } from './../../widgets';
+import { type UserModel } from './../models/user.model';
 import * as UsersActions from './../../core/@ngrx/users/users.actions';
 import * as RouterActions from './../../core/@ngrx/router/router.actions';
-
-import { UserModel } from './../models/user.model';
-import { SpinnerService } from './../../widgets';
 
 @Injectable({
   providedIn: 'any'
 })
 export class UserResolveGuard implements Resolve<UserModel> {
   constructor(
-    private store: Store<AppState>,
+    private store: Store,
     private spinner: SpinnerService
   ) {}
 

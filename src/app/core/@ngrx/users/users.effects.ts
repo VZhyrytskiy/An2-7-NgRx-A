@@ -1,17 +1,12 @@
 import { Injectable } from '@angular/core';
-
-// @NgRx
-import { Action } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import * as UsersActions from './users.actions';
-import * as RouterActions from './../router/router.actions';
-
-// Rxjs
-import { Observable, of } from 'rxjs';
-import { switchMap, map, catchError, concatMap } from 'rxjs/operators';
+import { type Action } from '@ngrx/store';
+import { type Observable, of, switchMap, map, catchError, concatMap } from 'rxjs';
 
 import { UserObservableService } from './../../../users/services';
-import { UserModel } from '../../../users/models/user.model';
+import { type UserModel } from '../../../users/models/user.model';
+import * as UsersActions from './users.actions';
+import * as RouterActions from './../router/router.actions';
 
 @Injectable()
 export class UsersEffects {
@@ -79,19 +74,22 @@ export class UsersEffects {
     )
   );
 
-  createUpdateUserSuccess$: Observable<Action> = createEffect(() =>
+  createUserSuccess$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
-      ofType(UsersActions.createUserSuccess, UsersActions.updateUserSuccess),
+      ofType(UsersActions.createUserSuccess),
       map(action => {
-        const { type: actionType, user: { id: userID } } = action;
-        let path: any[];
+        const path = ['/users'];
+        return RouterActions.go({ path });
+      })
+    )
+  );
 
-        if (actionType === '[Update User Effect] UPDATE_USER_SUCCESS') {
-          path = ['/users', { editedUserID: userID }];
-        } else {
-          path = ['/users'];
-        }
-
+  updateUserSuccess$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UsersActions.updateUserSuccess),
+      map(action => {
+        const { user: { id: userID } } = action;
+        const path = ['/users', { editedUserID: userID }];
         return RouterActions.go({ path });
       })
     )
