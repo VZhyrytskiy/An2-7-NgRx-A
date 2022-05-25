@@ -1,10 +1,10 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 
-import { UsersState, initialUsersState } from './users.state';
+import { initialUsersState } from './users.state';
+import { type UserModel } from './../../../users/models/user.model';
 import * as UsersActions from './users.actions';
-import { UserModel } from './../../../users/models/user.model';
 
-const reducer = createReducer(
+export const usersReducer = createReducer(
   initialUsersState,
   on(UsersActions.getUsers, state => {
     return {
@@ -94,7 +94,3 @@ const reducer = createReducer(
     };
   })
 );
-
-export function usersReducer(state: UsersState | undefined, action: Action) {
-  return reducer(state, action);
-}

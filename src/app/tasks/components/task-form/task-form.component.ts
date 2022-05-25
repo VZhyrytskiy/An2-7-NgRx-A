@@ -1,13 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-
-// @NgRx
-import { TasksFacade } from 'src/app/core/@ngrx/tasks/tasks.facade';
-
-// rxjs
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Component, type OnInit, type OnDestroy } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 
 import { TaskModel } from './../../models/task.model';
+import { TasksFacade } from 'src/app/core/@ngrx/tasks/tasks.facade';
 
 @Component({
   templateUrl: './task-form.component.html',
@@ -18,7 +13,9 @@ export class TaskFormComponent implements OnInit, OnDestroy {
 
   private componentDestroyed$: Subject<void> = new Subject<void>();
 
-  constructor(private tasksFacade: TasksFacade) {}
+  constructor(
+    private tasksFacade: TasksFacade
+  ) {}
 
   ngOnInit(): void {
     const observer: any = {

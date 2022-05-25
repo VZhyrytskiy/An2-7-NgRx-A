@@ -1,12 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, type OnInit } from '@angular/core';
+import { type Observable } from 'rxjs';
 
-// rxjs
-import { Observable } from 'rxjs';
-
-// @ngrx
 import { TasksFacade } from './../../../core/@ngrx';
-
-import { TaskModel } from './../../models/task.model';
+import { type TaskModel } from './../../models/task.model';
 
 @Component({
   templateUrl: './task-list.component.html',
@@ -38,6 +34,7 @@ export class TaskListComponent implements OnInit {
   }
 
   onDeleteTask(task: TaskModel): void {
-    this.tasksFacade.deleteTask({ task });
+    const taskToDelete: TaskModel = { ...task };
+    this.tasksFacade.deleteTask({ task: taskToDelete });
   }
 }

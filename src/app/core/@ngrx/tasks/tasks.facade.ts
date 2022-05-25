@@ -1,21 +1,12 @@
 import { Injectable } from '@angular/core';
-
-// @ngrx
 import { Store } from '@ngrx/store';
-import { AppState } from '../app.state';
-import {
-  selectTasksData,
-  selectTasksError,
-  selectSelectedTaskByUrl
-} from './tasks.selectors';
+import { type Observable } from 'rxjs';
+import { type NavigationExtras } from '@angular/router';
+
+import { selectTasksData, selectTasksError, selectSelectedTaskByUrl } from './tasks.selectors';
+import { type TaskModel } from 'src/app/tasks/models/task.model';
 import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
-
-// rxjs
-import { Observable } from 'rxjs';
-
-import { TaskModel } from 'src/app/tasks/models/task.model';
-import { NavigationExtras } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +16,7 @@ export class TasksFacade {
   tasksError$: Observable<Error | string | null>;
   selectedTaskByUrl$: Observable<TaskModel>;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store) {
     this.tasks$ = this.store.select(selectTasksData);
     this.tasksError$ = this.store.select(selectTasksError);
     this.selectedTaskByUrl$ = this.store.select(selectSelectedTaskByUrl);

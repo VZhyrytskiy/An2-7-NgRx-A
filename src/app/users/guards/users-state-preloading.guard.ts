@@ -1,28 +1,21 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
-
 import { EntityServices, EntityCollectionService } from '@ngrx/data';
+import { type CanActivate } from '@angular/router';
+import { type Observable, of, catchError, take, tap } from 'rxjs';
 
-import { Observable, of } from 'rxjs';
-import { catchError, switchMap, take, tap } from 'rxjs/operators';
 import { UserModel } from '../models/user.model';
-
 @Injectable({
   providedIn: 'any'
 })
 export class UsersStatePreloadingGuard implements CanActivate {
-  private userService: EntityCollectionService<UserModel>;
+  private userService!: EntityCollectionService<UserModel>;
 
-  constructor(
-    entitytServices: EntityServices
-  ) {
-    // получить сервис для entity User
+  constructor(entitytServices: EntityServices) {
     this.userService = entitytServices.getEntityCollectionService('User');
   }
 
   canActivate(): Observable<boolean> {
     return this.checkStore().pipe(
-      switchMap(() => of(true)),
       catchError(() => of(false))
     );
   }
